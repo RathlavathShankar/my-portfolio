@@ -1,0 +1,830 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Student Information Management System (SAP ECC, Classical ABAP) | Project Documentation</title>
+<meta name="description" content="Project documentation for Student Information Management System (SAP ECC, Classical ABAP) by Rathlavath Shankar."><style>
+:root{--bg:#09090b;--bg2:#101013;--tx:#f5f5f7;--mu:#a2a2ad;--ac:#38b6ff;--bd:rgba(255,255,255,.12);--code:#050507}
+:root[data-theme="light"]{--bg:#f6f7f9;--bg2:#fff;--tx:#0b0b0f;--mu:#555561;--ac:#0a6ed1;--bd:rgba(0,0,0,.12);--code:#101820}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.7 Inter,-apple-system,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px}
+.bar{max-width:880px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bar a{color:var(--tx);text-decoration:none;font-weight:600;font-size:14px;padding:8px 14px;border:1px solid var(--bd);border-radius:10px}.bar a:hover{border-color:var(--ac);color:var(--ac)}
+.bar b{font-weight:800;letter-spacing:-.04em}.bar b i{color:var(--ac);font-style:normal}
+main{max-width:880px;margin:0 auto;padding:32px 16px 80px}
+.eyebrow{font:600 12px ui-monospace,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--ac)}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.15;letter-spacing:-.025em;margin:10px 0 28px}
+h1.title,header#title-block-header{margin-top:0}
+main h2{font-size:24px;margin:44px 0 12px;letter-spacing:-.02em;padding-top:8px;border-top:1px solid var(--bd)}main h3{font-size:19px;margin:28px 0 8px}main h4{font-size:16px;margin:20px 0 6px;color:var(--ac)}
+p{margin:0 0 14px}a{color:var(--ac)}li{margin:4px 0}
+img{max-width:100%;height:auto;border:1px solid var(--bd);border-radius:12px;display:block;margin:14px auto;background:var(--bg2)}
+.tw{overflow-x:auto;margin:16px 0;border:1px solid var(--bd);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:480px;font-size:14.5px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--bd)}th{background:var(--bg2);color:var(--ac);font-weight:600}tr:last-child td{border-bottom:0}
+pre{background:var(--code);color:#d6e9ff;border:1px solid var(--bd);border-radius:12px;padding:14px;overflow-x:auto;font:12.5px/1.6 ui-monospace,Menlo,Consolas,monospace;margin:16px 0}code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}p code,li code,td code{background:var(--bg2);border:1px solid var(--bd);padding:1px 6px;border-radius:6px}pre code{background:none;border:0;padding:0}
+figcaption,.caption{color:var(--mu);font-size:13px;text-align:center}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+</style></head><body>
+<header class="top"><div class="bar"><b>RS<i>.</i></b><a id="back" href="../">&larr; Back to portfolio</a></div></header>
+<main><span class="eyebrow">Project Documentation</span><p><strong>MINI PROJECT REPORT</strong></p>
+<p><strong>STUDENT MANAGEMENT SYSTEM</strong></p>
+<p><strong>Using SAP ABAP – ECC</strong></p>
+<p><strong>Submitted by</strong></p>
+<p><strong>RATHLAVATH SHANKAR</strong></p>
+<p>Roll Number: 00005*<br />
+Branch: B.Tech – Computer Science and Engineering (Data Science)<br />
+Institution: Guru Nanak Institute of Technology<br />
+Academic Year: 2026–2027</p>
+<p><em>*The screenshots identify the sample/project student record as 00005. Replace this with your official university roll number if it is different.</em></p>
+<h1 id="project-details">Project Details</h1>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Item</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Project title</td>
+<td>Student Management System</td>
+</tr>
+<tr class="even">
+<td>Technology</td>
+<td>SAP ABAP – SAP ECC</td>
+</tr>
+<tr class="odd">
+<td>Main executable</td>
+<td>ZSTU_MGMT</td>
+</tr>
+<tr class="even">
+<td>Package</td>
+<td>ZSTU_MGMT</td>
+</tr>
+<tr class="odd">
+<td>Includes</td>
+<td>ZSTU_MGMT_TOP, ZSTU_MGMT_SEL, ZSTU_MGMT_F01</td>
+</tr>
+<tr class="even">
+<td>Database tables</td>
+<td>ZSTU_MST (student master), ZSTU_MRK (marks), ZSTU_ATT (attendance)</td>
+</tr>
+<tr class="odd">
+<td>Developer</td>
+<td>Rathlavath Shankar</td>
+</tr>
+<tr class="even">
+<td>Branch</td>
+<td>B.Tech CSE (Data Science)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="important-implementation-note">Important implementation note</h2>
+<p>This report is based on the five supplied SAP GUI screenshots and the project object names recovered from the earlier project work. The screenshots confirm the selection screen, a five-record student ALV list, a marks detail list for student 00005, and an attendance detail list for student 00005. The complete source listing below is a consistent ECC-style reference implementation. Before activating it, compare the field names in your SE11 tables with the field mapping in Section 6; if your actual DDIC names differ, change the corresponding names in the code. The screenshots do not expose every field name or the full saved source, so this report does not claim that every code line is a verbatim export of your SAP system.</p>
+<h1 id="certificate">Certificate</h1>
+<p>This is to certify that the mini project entitled “Student Management System using SAP ABAP – ECC” has been prepared and documented by Rathlavath Shankar as part of the academic and practical learning activities in SAP ABAP. The project demonstrates database retrieval, selection-screen filtering, ALV reporting and student-wise academic information display.</p>
+<p>Guide / Faculty Signature: __________________________</p>
+<p>Date: ____________________ Place: ____________________</p>
+<h1 id="declaration">Declaration</h1>
+<p>I hereby declare that this project report is prepared for academic learning and documentation. The implementation and screenshots represent the Student Management System developed in an SAP ECC practice environment. Any sample student details used in the system are demonstration data.</p>
+<h1 id="table-of-contents">Table of Contents</h1>
+<ul>
+<li><p>1. Abstract</p></li>
+<li><p>2. Introduction</p></li>
+<li><p>3. Objectives and Scope</p></li>
+<li><p>4. Requirements and Tools</p></li>
+<li><p>5. System Design and Workflow</p></li>
+<li><p>6. Database Design</p></li>
+<li><p>7. Program Structure</p></li>
+<li><p>8. Complete ABAP Source Code</p></li>
+<li><p>9. Execution Procedure</p></li>
+<li><p>10. Output Screenshots</p></li>
+<li><p>11. Testing and Validation</p></li>
+<li><p>12. Advantages, Limitations and Future Enhancements</p></li>
+<li><p>13. Conclusion</p></li>
+<li><p>14. Viva / Interview Questions</p></li>
+<li><p>Appendix A – Field-name checklist</p></li>
+</ul>
+<h1 id="abstract">1. Abstract</h1>
+<p>The Student Management System is a classical SAP ABAP ECC mini project designed to display and review student academic information. It retrieves student master records from a custom database table, allows users to filter records by student ID, name and course, and presents the results in an ALV grid. From the student list, the user can inspect marks and attendance information for an individual student. The project demonstrates core ABAP concepts including Dictionary objects, internal tables, work areas, Open SQL, selection screens, modularization using INCLUDE programs, function modules and ALV reporting.</p>
+<h1 id="introduction">2. Introduction</h1>
+<p>Educational institutions maintain student information such as identity, course, date of birth, email address and phone number. Academic results and attendance are stored as related records. The purpose of this project is to bring these related details into a simple SAP GUI report. The solution uses custom Z tables and a classical executable ABAP report so that it can run in an SAP ECC learning system.</p>
+<h1 id="objectives-and-scope">3. Objectives and Scope</h1>
+<ul>
+<li><p>Maintain a structured student master data source.</p></li>
+<li><p>Retrieve student records using selection criteria.</p></li>
+<li><p>Display the matching student list in an ALV grid with a total-record count.</p></li>
+<li><p>Display semester-wise subject marks for a selected student.</p></li>
+<li><p>Display date-wise attendance status for a selected student.</p></li>
+<li><p>Use modular ABAP includes to separate declarations, selection-screen definitions and processing logic.</p></li>
+<li><p>Provide a foundation for future create, update, delete and export features.</p></li>
+</ul>
+<p>Scope: This documented version focuses on reporting and drill-down display. Database maintenance, authentication, role-based authorization and automatic calculation of attendance percentage are not asserted as implemented unless separately added.</p>
+<h1 id="requirements-and-tools">4. Requirements and Tools</h1>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Category</strong></th>
+<th><strong>Requirement</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Platform</td>
+<td>SAP ERP / SAP ECC ABAP application server</td>
+</tr>
+<tr class="even">
+<td>Interface</td>
+<td>SAP GUI</td>
+</tr>
+<tr class="odd">
+<td>Editor</td>
+<td>SE38 / SE80 ABAP Workbench</td>
+</tr>
+<tr class="even">
+<td>Dictionary</td>
+<td>SE11</td>
+</tr>
+<tr class="odd">
+<td>Language</td>
+<td>ABAP / Open SQL</td>
+</tr>
+<tr class="even">
+<td>Output</td>
+<td>Classical ALV Grid using REUSE_ALV_GRID_DISPLAY</td>
+</tr>
+<tr class="odd">
+<td>Custom package</td>
+<td>ZSTU_MGMT</td>
+</tr>
+<tr class="even">
+<td>Main report</td>
+<td>ZSTU_MGMT</td>
+</tr>
+</tbody>
+</table></div>
+<h1 id="system-design-and-workflow">5. System Design and Workflow</h1>
+<p>High-level flow:</p>
+<p>User</p>
+<p>|</p>
+<p>v</p>
+<p>Selection Screen (Student ID / Name / Course)</p>
+<p>|</p>
+<p>v</p>
+<p>ZSTU_MGMT – START-OF-SELECTION</p>
+<p>|</p>
+<p>v</p>
+<p>Read ZSTU_MST using Open SQL</p>
+<p>|</p>
+<p>v</p>
+<p>Build internal table + count records</p>
+<p>|</p>
+<p>v</p>
+<p>Display Student ALV</p>
+<p>|</p>
+<p>+----&gt; Select/double-click student ----&gt; Read ZSTU_MRK ----&gt; Marks ALV</p>
+<p>|</p>
+<p>+----&gt; Attendance action -------------&gt; Read ZSTU_ATT ----&gt; Attendance ALV</p>
+<h2 id="user-workflow">User workflow</h2>
+<ol type="1">
+<li><p>Run transaction SE38 or SE80 and execute report ZSTU_MGMT.</p></li>
+<li><p>Enter one or more filters: student ID, student name or course. Leave fields blank to retrieve all students.</p></li>
+<li><p>Execute (F8). The report displays the matching students and the total number of records.</p></li>
+<li><p>Select a student row and use the marks or attendance drill-down action configured in the report.</p></li>
+<li><p>Review the subject/semester marks or date-wise attendance records in the corresponding ALV output.</p></li>
+</ol>
+<h1 id="database-design">6. Database Design</h1>
+<p>Create the following transparent tables in SE11 (or use the equivalent tables already created in your system). Use a suitable data element/domain for each field. The exact technical field names must match the SELECT statements in the program.</p>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Table</strong></th>
+<th><strong>Suggested field</strong></th>
+<th><strong>Suggested type</strong></th>
+<th><strong>Purpose</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ZSTU_MST</td>
+<td>MANDT</td>
+<td>CLNT</td>
+<td>Client</td>
+</tr>
+<tr class="even">
+<td>ZSTU_MST</td>
+<td>STU_ID</td>
+<td>CHAR 5</td>
+<td>Student ID / key</td>
+</tr>
+<tr class="odd">
+<td>ZSTU_MST</td>
+<td>STU_NAME</td>
+<td>CHAR 40</td>
+<td>Student name</td>
+</tr>
+<tr class="even">
+<td>ZSTU_MST</td>
+<td>COURSE</td>
+<td>CHAR 10</td>
+<td>Course / branch</td>
+</tr>
+<tr class="odd">
+<td>ZSTU_MST</td>
+<td>DOB</td>
+<td>DATS</td>
+<td>Date of birth</td>
+</tr>
+<tr class="even">
+<td>ZSTU_MST</td>
+<td>EMAIL</td>
+<td>CHAR 60</td>
+<td>Email address</td>
+</tr>
+<tr class="odd">
+<td>ZSTU_MST</td>
+<td>PHONE</td>
+<td>CHAR 15</td>
+<td>Phone number</td>
+</tr>
+<tr class="even">
+<td>ZSTU_MRK</td>
+<td>MANDT</td>
+<td>CLNT</td>
+<td>Client</td>
+</tr>
+<tr class="odd">
+<td>ZSTU_MRK</td>
+<td>STU_ID</td>
+<td>CHAR 5</td>
+<td>Student reference</td>
+</tr>
+<tr class="even">
+<td>ZSTU_MRK</td>
+<td>SEMESTER</td>
+<td>NUMC 2</td>
+<td>Semester number</td>
+</tr>
+<tr class="odd">
+<td>ZSTU_MRK</td>
+<td>SUBJECT</td>
+<td>CHAR 30</td>
+<td>Subject name</td>
+</tr>
+<tr class="even">
+<td>ZSTU_MRK</td>
+<td>MAX_MARKS</td>
+<td>INT4</td>
+<td>Maximum marks</td>
+</tr>
+<tr class="odd">
+<td>ZSTU_MRK</td>
+<td>OBT_MARKS</td>
+<td>INT4</td>
+<td>Obtained marks</td>
+</tr>
+<tr class="even">
+<td>ZSTU_ATT</td>
+<td>MANDT</td>
+<td>CLNT</td>
+<td>Client</td>
+</tr>
+<tr class="odd">
+<td>ZSTU_ATT</td>
+<td>STU_ID</td>
+<td>CHAR 5</td>
+<td>Student reference</td>
+</tr>
+<tr class="even">
+<td>ZSTU_ATT</td>
+<td>ATT_DATE</td>
+<td>DATS</td>
+<td>Attendance date</td>
+</tr>
+<tr class="odd">
+<td>ZSTU_ATT</td>
+<td>ATT_STATUS</td>
+<td>CHAR 10</td>
+<td>PRESENT / ABSENT</td>
+</tr>
+</tbody>
+</table></div>
+<p>Recommended keys: ZSTU_MST – MANDT + STU_ID; ZSTU_MRK – MANDT + STU_ID + SEMESTER + SUBJECT; ZSTU_ATT – MANDT + STU_ID + ATT_DATE. Activate each table and maintain technical settings before inserting test records.</p>
+<h1 id="program-structure">7. Program Structure</h1>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Object</strong></th>
+<th><strong>Responsibility</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ZSTU_MGMT</td>
+<td>Main executable report; includes the other source files.</td>
+</tr>
+<tr class="even">
+<td>ZSTU_MGMT_TOP</td>
+<td>Types, internal tables, work areas and global variables.</td>
+</tr>
+<tr class="odd">
+<td>ZSTU_MGMT_SEL</td>
+<td>Selection-screen definitions for student ID, name and course.</td>
+</tr>
+<tr class="even">
+<td>ZSTU_MGMT_F01</td>
+<td>Forms for data retrieval, ALV display and detail reports.</td>
+</tr>
+</tbody>
+</table></div>
+<p>The package shown in the Object Navigator is ZSTU_MGMT. The project tree also shows generated table-maintenance function groups; these are Dictionary-generated objects and are not required for executing the report itself.</p>
+<h1 id="complete-abap-source-code">8. Complete ABAP Source Code</h1>
+<h2 id="main-program-zstu_mgmt">8.1 Main program – ZSTU_MGMT</h2>
+<p>REPORT zstu_mgmt.</p>
+<p>INCLUDE zstu_mgmt_top.</p>
+<p>INCLUDE zstu_mgmt_sel.</p>
+<p>INCLUDE zstu_mgmt_f01.</p>
+<p>START-OF-SELECTION.</p>
+<p>PERFORM get_students.</p>
+<p>AT USER-COMMAND.</p>
+<p>CASE sy-ucomm.</p>
+<p>WHEN 'MARKS'.</p>
+<p>PERFORM display_marks.</p>
+<p>WHEN 'ATTEND'.</p>
+<p>PERFORM display_attendance.</p>
+<p>ENDCASE.</p>
+<h2 id="global-declarations-zstu_mgmt_top">8.2 Global declarations – ZSTU_MGMT_TOP</h2>
+<p>TABLES: zstu_mst.</p>
+<p>TYPE-POOLS: slis.</p>
+<p>TYPES: BEGIN OF ty_student,</p>
+<p>stu_id TYPE zstu_mst-stu_id,</p>
+<p>stu_name TYPE zstu_mst-stu_name,</p>
+<p>course TYPE zstu_mst-course,</p>
+<p>dob TYPE zstu_mst-dob,</p>
+<p>email TYPE zstu_mst-email,</p>
+<p>phone TYPE zstu_mst-phone,</p>
+<p>END OF ty_student.</p>
+<p>TYPES: BEGIN OF ty_marks,</p>
+<p>stu_id TYPE zstu_mrk-stu_id,</p>
+<p>semester TYPE zstu_mrk-semester,</p>
+<p>subject TYPE zstu_mrk-subject,</p>
+<p>max_marks TYPE zstu_mrk-max_marks,</p>
+<p>obt_marks TYPE zstu_mrk-obt_marks,</p>
+<p>END OF ty_marks.</p>
+<p>TYPES: BEGIN OF ty_attendance,</p>
+<p>stu_id TYPE zstu_att-stu_id,</p>
+<p>att_date TYPE zstu_att-att_date,</p>
+<p>att_status TYPE zstu_att-att_status,</p>
+<p>END OF ty_attendance.</p>
+<p>DATA: gt_students TYPE STANDARD TABLE OF ty_student,</p>
+<p>gs_student TYPE ty_student,</p>
+<p>gt_marks TYPE STANDARD TABLE OF ty_marks,</p>
+<p>gs_marks TYPE ty_marks,</p>
+<p>gt_att TYPE STANDARD TABLE OF ty_attendance,</p>
+<p>gs_att TYPE ty_attendance.</p>
+<p>DATA: gv_student_id TYPE zstu_mst-stu_id,</p>
+<p>gv_total TYPE i,</p>
+<p>gv_title TYPE lvc_title.</p>
+<p>DATA: gt_fieldcat TYPE slis_t_fieldcat_alv,</p>
+<p>gs_fieldcat TYPE slis_fieldcat_alv,</p>
+<p>gs_layout TYPE slis_layout_alv.</p>
+<p>DATA: gv_repid TYPE sy-repid.</p>
+<h2 id="selection-screen-zstu_mgmt_sel">8.3 Selection screen – ZSTU_MGMT_SEL</h2>
+<p>SELECT-OPTIONS:</p>
+<p>s_stuid FOR zstu_mst-stu_id,</p>
+<p>s_name FOR zstu_mst-stu_name,</p>
+<p>s_course FOR zstu_mst-course.</p>
+<p>INITIALIZATION.</p>
+<p>gv_repid = sy-repid.</p>
+<h2 id="processing-forms-zstu_mgmt_f01">8.4 Processing forms – ZSTU_MGMT_F01</h2>
+<p>The following implementation uses the suggested DDIC field names in Section 6. If your SE11 table uses different names, replace them consistently in the TYPES declarations and SELECT statements.</p>
+<p>FORM get_students.</p>
+<p>CLEAR: gt_students, gv_total.</p>
+<p>SELECT stu_id</p>
+<p>stu_name</p>
+<p>course</p>
+<p>dob</p>
+<p>email</p>
+<p>phone</p>
+<p>FROM zstu_mst</p>
+<p>INTO TABLE gt_students</p>
+<p>WHERE stu_id IN s_stuid</p>
+<p>AND stu_name IN s_name</p>
+<p>AND course IN s_course.</p>
+<p>IF sy-subrc &lt;&gt; 0 OR gt_students IS INITIAL.</p>
+<p>MESSAGE 'No student records found for the selection' TYPE 'I'.</p>
+<p>RETURN.</p>
+<p>ENDIF.</p>
+<p>DESCRIBE TABLE gt_students LINES gv_total.</p>
+<p>CONCATENATE 'STUDENT INFORMATION - TOTAL RECORDS:'</p>
+<p>gv_total</p>
+<p>INTO gv_title SEPARATED BY space.</p>
+<p>PERFORM display_student_alv.</p>
+<p>ENDFORM.</p>
+<p>FORM display_student_alv.</p>
+<p>CLEAR: gt_fieldcat, gs_layout.</p>
+<p>PERFORM add_field USING 'STU_ID' 'Student ID' 10.</p>
+<p>PERFORM add_field USING 'STU_NAME' 'Student Name' 25.</p>
+<p>PERFORM add_field USING 'COURSE' 'Course' 12.</p>
+<p>PERFORM add_field USING 'DOB' 'Date of Birth' 12.</p>
+<p>PERFORM add_field USING 'EMAIL' 'Email Address' 30.</p>
+<p>PERFORM add_field USING 'PHONE' 'Phone Number' 15.</p>
+<p>gs_layout-zebra = 'X'.</p>
+<p>gs_layout-colwidth_optimize = 'X'.</p>
+<p>CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'</p>
+<p>EXPORTING</p>
+<p>i_callback_program = sy-repid</p>
+<p>i_grid_title = gv_title</p>
+<p>is_layout = gs_layout</p>
+<p>it_fieldcat = gt_fieldcat</p>
+<p>TABLES</p>
+<p>t_outtab = gt_students</p>
+<p>EXCEPTIONS</p>
+<p>program_error = 1</p>
+<p>OTHERS = 2.</p>
+<p>IF sy-subrc &lt;&gt; 0.</p>
+<p>MESSAGE 'Error while displaying student ALV' TYPE 'I'.</p>
+<p>ENDIF.</p>
+<p>ENDFORM.</p>
+<p>FORM add_field USING p_field TYPE slis_fieldname</p>
+<p>p_text TYPE scrtext_l</p>
+<p>p_len TYPE i.</p>
+<p>CLEAR gs_fieldcat.</p>
+<p>gs_fieldcat-fieldname = p_field.</p>
+<p>gs_fieldcat-seltext_l = p_text.</p>
+<p>gs_fieldcat-outputlen = p_len.</p>
+<p>APPEND gs_fieldcat TO gt_fieldcat.</p>
+<p>ENDFORM.</p>
+<p>FORM display_marks.</p>
+<p>IF gv_student_id IS INITIAL.</p>
+<p>MESSAGE 'Select a student first' TYPE 'I'.</p>
+<p>RETURN.</p>
+<p>ENDIF.</p>
+<p>CLEAR gt_marks.</p>
+<p>SELECT stu_id</p>
+<p>semester</p>
+<p>subject</p>
+<p>max_marks</p>
+<p>obt_marks</p>
+<p>FROM zstu_mrk</p>
+<p>INTO TABLE gt_marks</p>
+<p>WHERE stu_id = gv_student_id.</p>
+<p>IF gt_marks IS INITIAL.</p>
+<p>MESSAGE 'No marks found for this student' TYPE 'I'.</p>
+<p>RETURN.</p>
+<p>ENDIF.</p>
+<p>CLEAR: gt_fieldcat, gs_layout.</p>
+<p>PERFORM add_field USING 'SEMESTER' 'Semester' 10.</p>
+<p>PERFORM add_field USING 'SUBJECT' 'Subject' 25.</p>
+<p>PERFORM add_field USING 'MAX_MARKS' 'Maximum Marks' 15.</p>
+<p>PERFORM add_field USING 'OBT_MARKS' 'Obtained Marks' 15.</p>
+<p>gs_layout-zebra = 'X'.</p>
+<p>gs_layout-colwidth_optimize = 'X'.</p>
+<p>CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'</p>
+<p>EXPORTING</p>
+<p>i_callback_program = sy-repid</p>
+<p>i_grid_title = 'MARKS DETAILS'</p>
+<p>is_layout = gs_layout</p>
+<p>it_fieldcat = gt_fieldcat</p>
+<p>TABLES</p>
+<p>t_outtab = gt_marks.</p>
+<p>ENDFORM.</p>
+<p>FORM display_attendance.</p>
+<p>IF gv_student_id IS INITIAL.</p>
+<p>MESSAGE 'Select a student first' TYPE 'I'.</p>
+<p>RETURN.</p>
+<p>ENDIF.</p>
+<p>CLEAR gt_att.</p>
+<p>SELECT stu_id</p>
+<p>att_date</p>
+<p>att_status</p>
+<p>FROM zstu_att</p>
+<p>INTO TABLE gt_att</p>
+<p>WHERE stu_id = gv_student_id.</p>
+<p>IF gt_att IS INITIAL.</p>
+<p>MESSAGE 'No attendance records found for this student' TYPE 'I'.</p>
+<p>RETURN.</p>
+<p>ENDIF.</p>
+<p>CLEAR: gt_fieldcat, gs_layout.</p>
+<p>PERFORM add_field USING 'ATT_DATE' 'Attendance Date' 15.</p>
+<p>PERFORM add_field USING 'ATT_STATUS' 'Attendance Status' 20.</p>
+<p>gs_layout-zebra = 'X'.</p>
+<p>gs_layout-colwidth_optimize = 'X'.</p>
+<p>CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'</p>
+<p>EXPORTING</p>
+<p>i_callback_program = sy-repid</p>
+<p>i_grid_title = 'ATTENDANCE DETAILS'</p>
+<p>is_layout = gs_layout</p>
+<p>it_fieldcat = gt_fieldcat</p>
+<p>TABLES</p>
+<p>t_outtab = gt_att.</p>
+<p>ENDFORM.</p>
+<h2 id="important-note-about-student-selection-and-alv-actions">8.5 Important note about student selection and ALV actions</h2>
+<p>The main report above gives a complete student-list implementation and the two detail-display forms. To invoke a detail form from the ALV, the ALV must pass the selected student ID to GV_STUDENT_ID and trigger the relevant form. In a production-ready version, add an ALV user-command callback and GUI status with function codes MARKS and ATTEND, or implement a double-click callback. The supplied screenshots confirm that marks and attendance outputs were reached, but they do not show the exact toolbar status or callback source. The safe way to finish this part is to retain the working callback already present in your SAP source and map its selected row to GV_STUDENT_ID.</p>
+<h2 id="example-callback-logic-for-selected-row">8.6 Example callback logic for selected row</h2>
+<p>If you configure a custom ALV GUI status, use a callback like the following. Add the function codes MARKS and ATTEND to a copied GUI status and pass the selected row's student ID before calling the detail form.</p>
+<p>FORM user_command USING r_ucomm LIKE sy-ucomm</p>
+<p>rs_selfield TYPE slis_selfield.</p>
+<p>CASE r_ucomm.</p>
+<p>WHEN 'MARKS' OR 'ATTEND'.</p>
+<p>READ TABLE gt_students INTO gs_student</p>
+<p>INDEX rs_selfield-tabindex.</p>
+<p>IF sy-subrc = 0.</p>
+<p>gv_student_id = gs_student-stu_id.</p>
+<p>IF r_ucomm = 'MARKS'.</p>
+<p>PERFORM display_marks.</p>
+<p>ELSEIF r_ucomm = 'ATTEND'.</p>
+<p>PERFORM display_attendance.</p>
+<p>ENDIF.</p>
+<p>ENDIF.</p>
+<p>ENDCASE.</p>
+<p>ENDFORM.</p>
+<p>In the REUSE_ALV_GRID_DISPLAY call for the student list, add I_CALLBACK_USER_COMMAND = 'USER_COMMAND'. For the custom toolbar buttons, create/copy a GUI status in SE41 and provide the function codes MARKS and ATTEND. If the existing project already has a different callback implementation, do not overwrite it blindly.</p>
+<h1 id="execution-procedure">9. Execution Procedure</h1>
+<ol start="6" type="1">
+<li><p>Open SE11 and verify that ZSTU_MST, ZSTU_MRK and ZSTU_ATT exist and are active.</p></li>
+<li><p>Verify key fields and data elements. Compare the names with Section 6.</p></li>
+<li><p>Open SE80 and select package ZSTU_MGMT.</p></li>
+<li><p>Create or open executable program ZSTU_MGMT.</p></li>
+<li><p>Create the includes ZSTU_MGMT_TOP, ZSTU_MGMT_SEL and ZSTU_MGMT_F01 and insert the corresponding code.</p></li>
+<li><p>Ensure the main report contains the INCLUDE statements in the correct order.</p></li>
+<li><p>Save and activate all includes, then activate the main report.</p></li>
+<li><p>Execute using F8. Test with all filters blank, then test each selection criterion individually.</p></li>
+<li><p>Confirm the student ALV count and student records.</p></li>
+<li><p>Use the configured marks and attendance actions to display student-wise details.</p></li>
+</ol>
+<h1 id="output-screenshots">10. Output Screenshots</h1>
+<p>The following screenshots were supplied as evidence of the running project.</p>
+<p><img src="student/image1.jpg" loading="lazy" decoding="async" /></p>
+<p><em>Figure 1. ABAP Workbench Object Navigator showing package ZSTU_MGMT, report and include objects.</em></p>
+<p><img src="student/image2.jpg" loading="lazy" decoding="async" /></p>
+<p><em>Figure 2. Student Management System selection screen with Student ID, Student Name and Course ranges.</em></p>
+<p><img src="student/image3.jpg" loading="lazy" decoding="async" /></p>
+<p><em>Figure 3. Student information ALV output showing five student records.</em></p>
+<p><img src="student/image4.jpg" loading="lazy" decoding="async" /></p>
+<p><em>Figure 4. Marks details output for student 00005, including semester, subject, maximum and obtained marks.</em></p>
+<p><img src="student/image5.jpg" loading="lazy" decoding="async" /></p>
+<p><em>Figure 5. Attendance details output for student 00005, showing attendance date and status.</em></p>
+<h2 id="observed-test-data-in-screenshots">10.1 Observed test data in screenshots</h2>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Output</strong></th>
+<th><strong>Observed result</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Student master ALV</td>
+<td>Total records: 5</td>
+</tr>
+<tr class="even">
+<td>Visible student IDs</td>
+<td>00002, 00003, 00004, 00001, 00005</td>
+</tr>
+<tr class="odd">
+<td>Student 00005 course</td>
+<td>CSD (as displayed in the sample output)</td>
+</tr>
+<tr class="even">
+<td>Marks for student 00005</td>
+<td>DBMS: 85/100; JAVA: 70/100; C: 89/100</td>
+</tr>
+<tr class="odd">
+<td>Attendance for student 00005</td>
+<td>One visible row: 01.10.20… – PRESENT (date is truncated in the screenshot)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Note: Some columns are visually truncated by the SAP ALV column width. Do not treat the clipped email, phone or date text as the full underlying value.</p>
+<h1 id="testing-and-validation">11. Testing and Validation</h1>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Test case</strong></th>
+<th><strong>Input / action</strong></th>
+<th><strong>Expected result</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TC01</td>
+<td>Execute with all filters blank</td>
+<td>All available student records appear.</td>
+</tr>
+<tr class="even">
+<td>TC02</td>
+<td>Enter an existing student ID</td>
+<td>Only the matching student appears.</td>
+</tr>
+<tr class="odd">
+<td>TC03</td>
+<td>Enter a name filter</td>
+<td>Matching name records appear.</td>
+</tr>
+<tr class="even">
+<td>TC04</td>
+<td>Enter a course filter</td>
+<td>Students in the selected course appear.</td>
+</tr>
+<tr class="odd">
+<td>TC05</td>
+<td>Enter a non-existing ID</td>
+<td>Informational message: no records found.</td>
+</tr>
+<tr class="even">
+<td>TC06</td>
+<td>Open marks for student 00005</td>
+<td>Semester-wise subject marks appear.</td>
+</tr>
+<tr class="odd">
+<td>TC07</td>
+<td>Open attendance for student 00005</td>
+<td>Date-wise attendance status appears.</td>
+</tr>
+<tr class="even">
+<td>TC08</td>
+<td>Student has no marks/attendance</td>
+<td>Informational message is displayed.</td>
+</tr>
+</tbody>
+</table></div>
+<h1 id="advantages-limitations-and-future-enhancements">12. Advantages, Limitations and Future Enhancements</h1>
+<h2 id="advantages">Advantages</h2>
+<ul>
+<li><p>Centralized view of student master information.</p></li>
+<li><p>Selection ranges make searching flexible.</p></li>
+<li><p>ALV provides sorting, filtering, layout and export capabilities supported by the SAP GUI environment.</p></li>
+<li><p>Modular includes make the code easier to maintain.</p></li>
+<li><p>Marks and attendance are stored separately and linked through student ID.</p></li>
+</ul>
+<h2 id="current-limitations">Current limitations</h2>
+<ul>
+<li><p>The report is primarily read-only; create/update/delete operations are outside the demonstrated scope.</p></li>
+<li><p>The screenshots show one attendance row for the selected student, not a complete attendance summary.</p></li>
+<li><p>A custom ALV toolbar or double-click callback must be configured to make the two drill-down actions directly accessible from the student ALV.</p></li>
+<li><p>The exact DDIC field names must be checked against the active tables in the target ECC system.</p></li>
+</ul>
+<h2 id="future-enhancements">Future enhancements</h2>
+<ul>
+<li><p>Add student create, change and delete operations with validations.</p></li>
+<li><p>Calculate attendance percentage and subject-wise pass/fail status.</p></li>
+<li><p>Add search help (F4) for student ID, course and semester.</p></li>
+<li><p>Add authorization checks for sensitive student information.</p></li>
+<li><p>Add Smart Forms or Adobe Forms to print student reports.</p></li>
+<li><p>Add download/export and audit logging features.</p></li>
+<li><p>Migrate the reporting model to CDS views and RAP in an S/4HANA learning environment.</p></li>
+</ul>
+<h1 id="conclusion">13. Conclusion</h1>
+<p>The Student Management System mini project demonstrates a practical use of SAP ABAP ECC for retrieving and presenting student information. It combines custom Dictionary tables, Open SQL, selection-screen input, internal tables, modular program includes and ALV reporting. The supplied runtime screenshots show a five-record student list and student-specific marks and attendance outputs for student 00005. The project provides a useful foundation for learning classical ABAP report development and can be extended with maintenance transactions, validations, authorization and printable reports.</p>
+<h1 id="viva-interview-questions">14. Viva / Interview Questions</h1>
+<p><strong>What is ABAP?</strong></p>
+<blockquote>
+<p>ABAP is SAP's programming language used to develop reports, interfaces, forms, enhancements and business applications.</p>
+</blockquote>
+<p><strong>What is SE11?</strong></p>
+<blockquote>
+<p>SE11 is the ABAP Dictionary transaction used to create and maintain tables, structures, data elements, domains and views.</p>
+</blockquote>
+<p><strong>What is a transparent table?</strong></p>
+<blockquote>
+<p>A Dictionary table that has a corresponding physical database table with a one-to-one logical definition.</p>
+</blockquote>
+<p><strong>What is SELECT-OPTIONS?</strong></p>
+<blockquote>
+<p>It creates a selection-screen range supporting single values, intervals, exclusions and multiple selections.</p>
+</blockquote>
+<p><strong>What is an internal table?</strong></p>
+<blockquote>
+<p>A runtime data object used to store multiple rows of structured data in an ABAP program.</p>
+</blockquote>
+<p><strong>What is a work area?</strong></p>
+<blockquote>
+<p>A structure used to hold one row of data while processing an internal table or database result.</p>
+</blockquote>
+<p><strong>What is SY-SUBRC?</strong></p>
+<blockquote>
+<p>A system field containing the return code of the last relevant ABAP statement; zero commonly indicates success.</p>
+</blockquote>
+<p><strong>What is ALV?</strong></p>
+<blockquote>
+<p>ABAP List Viewer, a standard SAP framework for displaying tabular data with sorting, filtering, layout and other functions.</p>
+</blockquote>
+<p><strong>Why use INCLUDE programs?</strong></p>
+<blockquote>
+<p>To divide a large report into manageable source units such as declarations, selection-screen code and processing forms.</p>
+</blockquote>
+<p><strong>What is the purpose of ZSTU_MST?</strong></p>
+<blockquote>
+<p>It stores student master information such as ID, name, course and contact details.</p>
+</blockquote>
+<p><strong>How are marks linked to a student?</strong></p>
+<blockquote>
+<p>Through a common student key such as STU_ID in the student master and marks tables.</p>
+</blockquote>
+<p><strong>What is the difference between SELECT SINGLE and SELECT INTO TABLE?</strong></p>
+<blockquote>
+<p>SELECT SINGLE reads one matching row; SELECT ... INTO TABLE retrieves a set of matching rows into an internal table.</p>
+</blockquote>
+<p><strong>What is modularization?</strong></p>
+<blockquote>
+<p>Breaking program logic into reusable units such as FORM routines, function modules or methods.</p>
+</blockquote>
+<p><strong>What does F8 do in SAP GUI?</strong></p>
+<blockquote>
+<p>It executes the current report or program in the relevant development transaction.</p>
+</blockquote>
+<p><strong>What enhancements can be added?</strong></p>
+<blockquote>
+<p>CRUD operations, validations, attendance percentage, search helps, authorizations and printable reports.</p>
+</blockquote>
+<h1 id="appendix-a-field-name-checklist-before-activation">Appendix A – Field-name checklist before activation</h1>
+<p>Open each table in SE11 and verify these names. If your table uses alternatives, update the program consistently.</p>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Program reference</strong></th>
+<th><strong>Expected table-field name</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Student ID</td>
+<td>ZSTU_MST-STU_ID</td>
+</tr>
+<tr class="even">
+<td>Student name</td>
+<td>ZSTU_MST-STU_NAME</td>
+</tr>
+<tr class="odd">
+<td>Course</td>
+<td>ZSTU_MST-COURSE</td>
+</tr>
+<tr class="even">
+<td>Date of birth</td>
+<td>ZSTU_MST-DOB</td>
+</tr>
+<tr class="odd">
+<td>Email</td>
+<td>ZSTU_MST-EMAIL</td>
+</tr>
+<tr class="even">
+<td>Phone</td>
+<td>ZSTU_MST-PHONE</td>
+</tr>
+<tr class="odd">
+<td>Semester</td>
+<td>ZSTU_MRK-SEMESTER</td>
+</tr>
+<tr class="even">
+<td>Subject</td>
+<td>ZSTU_MRK-SUBJECT</td>
+</tr>
+<tr class="odd">
+<td>Maximum marks</td>
+<td>ZSTU_MRK-MAX_MARKS</td>
+</tr>
+<tr class="even">
+<td>Obtained marks</td>
+<td>ZSTU_MRK-OBT_MARKS</td>
+</tr>
+<tr class="odd">
+<td>Attendance date</td>
+<td>ZSTU_ATT-ATT_DATE</td>
+</tr>
+<tr class="even">
+<td>Attendance status</td>
+<td>ZSTU_ATT-ATT_STATUS</td>
+</tr>
+</tbody>
+</table></div>
+<p>End of Report</p>
+</main>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+document.getElementById("back").addEventListener("click",function(e){if(history.length>1){e.preventDefault();history.back()}});</script></body></html>

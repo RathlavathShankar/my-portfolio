@@ -1,0 +1,1360 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Procure-to-Pay: Purchase Order Approval Application (SAP RAP) | Project Documentation</title>
+<meta name="description" content="Project documentation for Procure-to-Pay: Purchase Order Approval Application (SAP RAP) by Rathlavath Shankar."><style>
+:root{--bg:#09090b;--bg2:#101013;--tx:#f5f5f7;--mu:#a2a2ad;--ac:#38b6ff;--bd:rgba(255,255,255,.12);--code:#050507}
+:root[data-theme="light"]{--bg:#f6f7f9;--bg2:#fff;--tx:#0b0b0f;--mu:#555561;--ac:#0a6ed1;--bd:rgba(0,0,0,.12);--code:#101820}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.7 Inter,-apple-system,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px}
+.bar{max-width:880px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bar a{color:var(--tx);text-decoration:none;font-weight:600;font-size:14px;padding:8px 14px;border:1px solid var(--bd);border-radius:10px}.bar a:hover{border-color:var(--ac);color:var(--ac)}
+.bar b{font-weight:800;letter-spacing:-.04em}.bar b i{color:var(--ac);font-style:normal}
+main{max-width:880px;margin:0 auto;padding:32px 16px 80px}
+.eyebrow{font:600 12px ui-monospace,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--ac)}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.15;letter-spacing:-.025em;margin:10px 0 28px}
+h1.title,header#title-block-header{margin-top:0}
+main h2{font-size:24px;margin:44px 0 12px;letter-spacing:-.02em;padding-top:8px;border-top:1px solid var(--bd)}main h3{font-size:19px;margin:28px 0 8px}main h4{font-size:16px;margin:20px 0 6px;color:var(--ac)}
+p{margin:0 0 14px}a{color:var(--ac)}li{margin:4px 0}
+img{max-width:100%;height:auto;border:1px solid var(--bd);border-radius:12px;display:block;margin:14px auto;background:var(--bg2)}
+.tw{overflow-x:auto;margin:16px 0;border:1px solid var(--bd);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:480px;font-size:14.5px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--bd)}th{background:var(--bg2);color:var(--ac);font-weight:600}tr:last-child td{border-bottom:0}
+pre{background:var(--code);color:#d6e9ff;border:1px solid var(--bd);border-radius:12px;padding:14px;overflow-x:auto;font:12.5px/1.6 ui-monospace,Menlo,Consolas,monospace;margin:16px 0}code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}p code,li code,td code{background:var(--bg2);border:1px solid var(--bd);padding:1px 6px;border-radius:6px}pre code{background:none;border:0;padding:0}
+figcaption,.caption{color:var(--mu);font-size:13px;text-align:center}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+</style></head><body>
+<header class="top"><div class="bar"><b>RS<i>.</i></b><a id="back" href="../">&larr; Back to portfolio</a></div></header>
+<main><span class="eyebrow">Project Documentation</span><p><strong>PROJECT REPORT</strong></p>
+<p><strong>PROCURE-TO-PAY<br />
+PURCHASE ORDER APPROVAL APP</strong></p>
+<p><em>Built using SAP ABAP Cloud, RAP Managed Scenario,<br />
+Draft Handling, OData V4 and SAP Fiori Elements</em></p>
+<p><strong>SUBMITTED BY</strong></p>
+<p><strong>RATHLAVATH SHANKAR</strong></p>
+<p>Roll Number: 24WJ5A6712</p>
+<p>Branch: B.Tech – Computer Science and Engineering (Data Science)</p>
+<p><strong>ACADEMIC / TECHNICAL PROJECT DOCUMENTATION</strong></p>
+<p>November 2026</p>
+<h1 id="declaration">Declaration</h1>
+<p>I hereby present this project report titled “Procure-to-Pay Purchase Order Approval App (SAP RAP)”. This report documents the application design, development objects, business logic, service exposure, workflow, and test output based on the supplied SAP RAP build guide and the project screenshots.</p>
+<p>The screenshots included in this report represent the service binding and Fiori Elements application output supplied for this project.</p>
+<h1 id="acknowledgement">Acknowledgement</h1>
+<p>I would like to thank my faculty, trainers, and everyone who supported my learning of SAP ABAP, Core Data Services, the ABAP RESTful Application Programming Model, and SAP Fiori Elements. This project helped me connect data modelling, business logic, service publishing, and user-interface generation in one end-to-end application.</p>
+<h1 id="abstract">Abstract</h1>
+<p>The Procure-to-Pay (P2P) Purchase Order Approval App is an SAP RAP application that supports the creation and approval of purchase orders. A buyer creates a purchase order with one or more line items, saves it as a draft, and submits it for approval. A different user can approve or reject the submitted order. The application calculates the order total, assigns a purchase-order number, validates the supplier and item data, and controls available actions according to the document status and user authorization.</p>
+<p>The solution uses a managed RAP business object with draft handling, CDS interface and projection views, behavior definitions and implementation, metadata extensions, an OData V4 UI service binding, and a Fiori Elements List Report/Object Page.</p>
+<h1 id="table-of-contents">Table of Contents</h1>
+<ul>
+<li><p>1. Introduction and Objectives</p></li>
+<li><p>2. Scope and Functional Requirements</p></li>
+<li><p>3. Technology Stack and Prerequisites</p></li>
+<li><p>4. System Architecture</p></li>
+<li><p>5. Database Design</p></li>
+<li><p>6. Development and Complete Source Code</p></li>
+<li><p>7. Business Workflow</p></li>
+<li><p>8. Service Publishing and Fiori Elements UI</p></li>
+<li><p>9. Project Output and Screenshots</p></li>
+<li><p>10. Testing and Validation</p></li>
+<li><p>11. Known Limitations and Improvements</p></li>
+<li><p>12. Conclusion</p></li>
+<li><p>Appendix A – Object Inventory</p></li>
+<li><p>Appendix B – Interview Explanation Points</p></li>
+</ul>
+<h1 id="introduction-and-objectives">1. Introduction and Objectives</h1>
+<p>Procure-to-Pay is the business process through which an organization requests, orders, receives, and pays for goods or services. This project focuses on the purchase-order creation and approval stage.</p>
+<h2 id="problem-statement">1.1 Problem Statement</h2>
+<p>A purchase order needs controlled creation and approval. The application must preserve incomplete work as a draft, validate mandatory information, calculate order value, and prevent the person who created an order from approving or rejecting the same order.</p>
+<h2 id="project-objectives">1.2 Project Objectives</h2>
+<ul>
+<li><p>Create and maintain purchase-order header data and multiple line items.</p></li>
+<li><p>Allow users to save work as a draft and resume it later.</p></li>
+<li><p>Calculate the total amount from item quantity multiplied by item net price.</p></li>
+<li><p>Generate a purchase-order number and initialize status/date/currency.</p></li>
+<li><p>Validate that the supplier exists and that at least one item is present.</p></li>
+<li><p>Provide Submit, Approve, and Reject actions.</p></li>
+<li><p>Restrict editing and deletion after submission through instance feature control.</p></li>
+<li><p>Prevent the creator from approving or rejecting their own purchase order.</p></li>
+<li><p>Expose the application through OData V4 and render it using Fiori Elements.</p></li>
+</ul>
+<h1 id="scope-and-functional-requirements">2. Scope and Functional Requirements</h1>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Feature</strong></th>
+<th><strong>Expected behaviour</strong></th>
+<th><strong>RAP concept</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Create / edit PO with items</td>
+<td>Maintain a header and its child items</td>
+<td>Managed BO and composition</td>
+</tr>
+<tr class="even">
+<td>Save as draft</td>
+<td>Save incomplete work and resume later</td>
+<td>Draft handling</td>
+</tr>
+<tr class="odd">
+<td>Automatic total</td>
+<td>Sum quantity × net price across items</td>
+<td>Determination on modify</td>
+</tr>
+<tr class="even">
+<td>PO number and initial status</td>
+<td>Assign number on save; set default values</td>
+<td>Determinations</td>
+</tr>
+<tr class="odd">
+<td>Supplier validation</td>
+<td>Supplier must exist in supplier master</td>
+<td>Validation on save</td>
+</tr>
+<tr class="even">
+<td>Item validation</td>
+<td>At least one item must exist</td>
+<td>Validation on save</td>
+</tr>
+<tr class="odd">
+<td>Approval workflow</td>
+<td>Submit, approve or reject a PO</td>
+<td>Actions</td>
+</tr>
+<tr class="even">
+<td>Status-based controls</td>
+<td>Disable edits/actions when status does not permit them</td>
+<td>Instance feature control</td>
+</tr>
+<tr class="odd">
+<td>Segregation of duties</td>
+<td>Creator cannot approve/reject own PO</td>
+<td>Instance authorization</td>
+</tr>
+<tr class="even">
+<td>Fiori UI</td>
+<td>List, filters, value help, status criticality, object page</td>
+<td>Metadata extensions</td>
+</tr>
+</tbody>
+</table></div>
+<h1 id="technology-stack-and-prerequisites">3. Technology Stack and Prerequisites</h1>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Technology / Tool</strong></th>
+<th><strong>Purpose</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Eclipse with ABAP Development Tools (ADT)</td>
+<td>Create and activate ABAP repository objects</td>
+</tr>
+<tr class="even">
+<td>ABAP Cloud environment</td>
+<td>Execute clean-core RAP development</td>
+</tr>
+<tr class="odd">
+<td>ABAP CDS view entities</td>
+<td>Define the data model and consumption model</td>
+</tr>
+<tr class="even">
+<td>Managed RAP with draft</td>
+<td>Transactional behaviour and draft lifecycle</td>
+</tr>
+<tr class="odd">
+<td>EML (Entity Manipulation Language)</td>
+<td>Read and modify RAP business objects</td>
+</tr>
+<tr class="even">
+<td>OData V4 – UI</td>
+<td>Expose the service for Fiori Elements</td>
+</tr>
+<tr class="odd">
+<td>SAP Fiori Elements</td>
+<td>Generate List Report and Object Page UI</td>
+</tr>
+</tbody>
+</table></div>
+<p>Prerequisites from the supplied guide: an ABAP Cloud system such as SAP BTP ABAP Environment, ABAP Cloud Developer Trial, or a suitable S/4HANA release with ABAP Cloud language version; an ADT package using ABAP for Cloud Development; and basic ABAP/CDS knowledge.</p>
+<p>Activation order is important. Create dependencies first and activate dependent objects after their referenced objects exist. ADT quick fixes (Ctrl+1) can generate draft tables and the behavior implementation class.</p>
+<h1 id="system-architecture">4. System Architecture</h1>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Layer</strong></th>
+<th><strong>Objects</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Database</td>
+<td>ZPO_HDR, ZPO_ITEM, ZPO_SUPPLIER; generated draft tables ZPO_HDR_D and ZPO_ITEM_D</td>
+</tr>
+<tr class="even">
+<td>Interface CDS</td>
+<td>ZI_PO_HDR (root), ZI_PO_ITEM (child), ZI_PO_SUPPLIER_VH</td>
+</tr>
+<tr class="odd">
+<td>Behavior</td>
+<td>Behavior definition for ZI_PO_HDR and implementation class ZBP_I_PO_HDR</td>
+</tr>
+<tr class="even">
+<td>Projection CDS</td>
+<td>ZC_PO_HDR and ZC_PO_ITEM</td>
+</tr>
+<tr class="odd">
+<td>Projection behavior</td>
+<td>Projection behavior for ZC_PO_HDR</td>
+</tr>
+<tr class="even">
+<td>UI metadata</td>
+<td>Metadata extensions ZC_PO_HDR and ZC_PO_ITEM</td>
+</tr>
+<tr class="odd">
+<td>Service</td>
+<td>Service definition ZUI_PO_O4 and service binding ZUI_PO_O4_V4</td>
+</tr>
+<tr class="even">
+<td>User interface</td>
+<td>Fiori Elements List Report and Object Page</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="architecture-flow">4.1 Architecture Flow</h2>
+<p>Fiori Elements UI → OData V4 Service Binding → Service Definition → Projection CDS Views → RAP Behavior / EML → Interface CDS Views → Database Tables</p>
+<p>The header is the root business object. The item entity is a composition child of the header. The supplier value-help view supplies selectable supplier data.</p>
+<h2 id="main-rap-concepts-used">4.2 Main RAP Concepts Used</h2>
+<ul>
+<li><p>Managed implementation: RAP framework manages standard persistence operations.</p></li>
+<li><p>Draft handling: users can keep incomplete changes in draft storage before activation.</p></li>
+<li><p>Determination: calculates or initializes values automatically.</p></li>
+<li><p>Validation: checks business rules and reports errors before save.</p></li>
+<li><p>Action: executes a business operation such as submit, approve, or reject.</p></li>
+<li><p>Instance feature control: enables or disables operations according to the current instance status.</p></li>
+<li><p>Instance authorization: checks whether the current user is allowed to perform an operation.</p></li>
+</ul>
+<h1 id="database-design">5. Database Design</h1>
+<h2 id="table-zpo_hdr-purchase-order-header">5.1 Table ZPO_HDR – Purchase Order Header</h2>
+<p>Stores one record per purchase order. The UUID is the technical key; PO_ID is the business-facing number.</p>
+<p>@EndUserText.label : 'PO Header'</p>
+<p>@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE</p>
+<p>@AbapCatalog.tableCategory : #TRANSPARENT</p>
+<p>@AbapCatalog.deliveryClass : #A</p>
+<p>@AbapCatalog.dataMaintenance : #RESTRICTED</p>
+<p>define table zpo_hdr {</p>
+<p>key client : abap.clnt not null;</p>
+<p>key po_uuid : sysuuid_x16 not null;</p>
+<p>po_id : abap.numc(10);</p>
+<p>supplier : abap.char(10);</p>
+<p>description : abap.char(100);</p>
+<p>order_date : abap.dats;</p>
+<p>currency_code : abap.cuky;</p>
+<p>@Semantics.amount.currencyCode : 'zpo_hdr.currency_code'</p>
+<p>total_amount : abap.curr(15,2);</p>
+<p>status : abap.char(1);</p>
+<p>created_by : abp_creation_user;</p>
+<p>created_at : abp_creation_tstmpl;</p>
+<p>last_changed_by : abp_lastchange_user;</p>
+<p>last_changed_at : abp_lastchange_tstmpl;</p>
+<p>local_last_changed_at : abp_locinst_lastchange_tstmpl;</p>
+<p>}</p>
+<h2 id="table-zpo_item-purchase-order-items">5.2 Table ZPO_ITEM – Purchase Order Items</h2>
+<p>@EndUserText.label : 'PO Item'</p>
+<p>@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE</p>
+<p>@AbapCatalog.tableCategory : #TRANSPARENT</p>
+<p>@AbapCatalog.deliveryClass : #A</p>
+<p>@AbapCatalog.dataMaintenance : #RESTRICTED</p>
+<p>define table zpo_item {</p>
+<p>key client : abap.clnt not null;</p>
+<p>key item_uuid : sysuuid_x16 not null;</p>
+<p>po_uuid : sysuuid_x16;</p>
+<p>item_no : abap.numc(5);</p>
+<p>material_text : abap.char(60);</p>
+<p>quantity : abap.int4;</p>
+<p>currency_code : abap.cuky;</p>
+<p>@Semantics.amount.currencyCode : 'zpo_item.currency_code'</p>
+<p>net_price : abap.curr(15,2);</p>
+<p>}</p>
+<h2 id="table-zpo_supplier-supplier-master">5.3 Table ZPO_SUPPLIER – Supplier Master</h2>
+<p>@EndUserText.label : 'PO Supplier'</p>
+<p>@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE</p>
+<p>@AbapCatalog.tableCategory : #TRANSPARENT</p>
+<p>@AbapCatalog.deliveryClass : #A</p>
+<p>@AbapCatalog.dataMaintenance : #RESTRICTED</p>
+<p>define table zpo_supplier {</p>
+<p>key client : abap.clnt not null;</p>
+<p>key supplier_id : abap.char(10) not null;</p>
+<p>supplier_name : abap.char(60);</p>
+<p>country : abap.char(2);</p>
+<p>}</p>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Table</strong></th>
+<th><strong>Key fields</strong></th>
+<th><strong>Purpose</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ZPO_HDR</td>
+<td>CLIENT + PO_UUID</td>
+<td>Purchase-order header and status/total</td>
+</tr>
+<tr class="even">
+<td>ZPO_ITEM</td>
+<td>CLIENT + ITEM_UUID</td>
+<td>Line items linked by PO_UUID</td>
+</tr>
+<tr class="odd">
+<td>ZPO_SUPPLIER</td>
+<td>CLIENT + SUPPLIER_ID</td>
+<td>Supplier value-help master data</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="sample-supplier-loading-class">5.4 Sample Supplier Loading Class</h2>
+<p>Create class ZCL_PO_LOAD_DATA and run it as an ABAP Application (F9) to insert the sample supplier records.</p>
+<p>CLASS zcl_po_load_data DEFINITION PUBLIC FINAL CREATE PUBLIC.</p>
+<p>PUBLIC SECTION.</p>
+<p>INTERFACES if_oo_adt_classrun.</p>
+<p>ENDCLASS.</p>
+<p>CLASS zcl_po_load_data IMPLEMENTATION.</p>
+<p>METHOD if_oo_adt_classrun~main.</p>
+<p>DELETE FROM zpo_supplier.</p>
+<p>INSERT zpo_supplier FROM TABLE @( VALUE #(</p>
+<p>( supplier_id = '0000100001' supplier_name = 'Tata Steel Ltd'</p>
+<p>country = 'IN' )</p>
+<p>( supplier_id = '0000100002' supplier_name = 'Infosys Supplies'</p>
+<p>country = 'IN' )</p>
+<p>( supplier_id = '0000100003' supplier_name = 'Siemens Components'</p>
+<p>country = 'DE' )</p>
+<p>( supplier_id = '0000100004' supplier_name = 'Acme Packaging Inc'</p>
+<p>country = 'US' ) ) ).</p>
+<p>out-&gt;write( |{ sy-dbcnt } suppliers loaded| ).</p>
+<p>ENDMETHOD.</p>
+<p>ENDCLASS.</p>
+<h1 id="development-and-complete-source-code">6. Development and Complete Source Code</h1>
+<p>The following source listings are transcribed and organized from the supplied P2P RAP build guide. Use the exact object names consistently. If your system already contains objects with these names, use a project-specific suffix and update references consistently.</p>
+<h2 id="supplier-value-help-zi_po_supplier_vh">6.1 Supplier Value Help – ZI_PO_SUPPLIER_VH</h2>
+<p>@AccessControl.authorizationCheck: #NOT_REQUIRED</p>
+<p>@EndUserText.label: 'Supplier Value Help'</p>
+<p>@Search.searchable: true</p>
+<p>define view entity ZI_PO_SUPPLIER_VH</p>
+<p>as select from zpo_supplier</p>
+<p>{</p>
+<p>@ObjectModel.text.element: ['SupplierName']</p>
+<p>@Search.defaultSearchElement: true</p>
+<p>key supplier_id as SupplierId,</p>
+<p>@Search.defaultSearchElement: true</p>
+<p>supplier_name as SupplierName,</p>
+<p>country as Country</p>
+<p>}</p>
+<h2 id="root-interface-view-zi_po_hdr">6.2 Root Interface View – ZI_PO_HDR</h2>
+<p>@AccessControl.authorizationCheck: #NOT_REQUIRED</p>
+<p>@EndUserText.label: 'Purchase Order'</p>
+<p>define root view entity ZI_PO_HDR</p>
+<p>as select from zpo_hdr</p>
+<p>composition [0..*] of ZI_PO_ITEM as _Item</p>
+<p>association [0..1] to ZI_PO_SUPPLIER_VH as _Supplier</p>
+<p>on $projection.Supplier = _Supplier.SupplierId</p>
+<p>{</p>
+<p>key po_uuid as PoUuid,</p>
+<p>po_id as PoId,</p>
+<p>supplier as Supplier,</p>
+<p>_Supplier.SupplierName as SupplierName,</p>
+<p>description as Description,</p>
+<p>order_date as OrderDate,</p>
+<p>currency_code as CurrencyCode,</p>
+<p>@Semantics.amount.currencyCode: 'CurrencyCode'</p>
+<p>total_amount as TotalAmount,</p>
+<p>status as Status,</p>
+<p>cast( case status</p>
+<p>when 'N' then 'New'</p>
+<p>when 'S' then 'Submitted'</p>
+<p>when 'A' then 'Approved'</p>
+<p>when 'R' then 'Rejected'</p>
+<p>else '' end as abap.char(10) ) as StatusText,</p>
+<p>cast( case status</p>
+<p>when 'S' then 2</p>
+<p>when 'A' then 3</p>
+<p>when 'R' then 1</p>
+<p>else 0 end as abap.int1 ) as StatusCriticality,</p>
+<p>@Semantics.user.createdBy: true</p>
+<p>created_by as CreatedBy,</p>
+<p>@Semantics.systemDateTime.createdAt: true</p>
+<p>created_at as CreatedAt,</p>
+<p>@Semantics.user.lastChangedBy: true</p>
+<p>last_changed_by as LastChangedBy,</p>
+<p>@Semantics.systemDateTime.lastChangedAt: true</p>
+<p>last_changed_at as LastChangedAt,</p>
+<p>@Semantics.systemDateTime.localInstanceLastChangedAt: true</p>
+<p>local_last_changed_at as LocalLastChangedAt,</p>
+<p>_Item,</p>
+<p>_Supplier</p>
+<p>}</p>
+<h2 id="child-interface-view-zi_po_item">6.3 Child Interface View – ZI_PO_ITEM</h2>
+<p>@AccessControl.authorizationCheck: #NOT_REQUIRED</p>
+<p>@EndUserText.label: 'Purchase Order Item'</p>
+<p>define view entity ZI_PO_ITEM</p>
+<p>as select from zpo_item</p>
+<p>association to parent ZI_PO_HDR as _PurchaseOrder</p>
+<p>on $projection.PoUuid = _PurchaseOrder.PoUuid</p>
+<p>{</p>
+<p>key item_uuid as ItemUuid,</p>
+<p>po_uuid as PoUuid,</p>
+<p>item_no as ItemNo,</p>
+<p>material_text as MaterialText,</p>
+<p>quantity as Quantity,</p>
+<p>currency_code as CurrencyCode,</p>
+<p>@Semantics.amount.currencyCode: 'CurrencyCode'</p>
+<p>net_price as NetPrice,</p>
+<p>_PurchaseOrder</p>
+<p>}</p>
+<h2 id="behavior-definition-zi_po_hdr">6.4 Behavior Definition – ZI_PO_HDR</h2>
+<p>managed implementation in class zbp_i_po_hdr unique;</p>
+<p>strict ( 2 );</p>
+<p>with draft;</p>
+<p>define behavior for ZI_PO_HDR alias PurchaseOrder</p>
+<p>persistent table zpo_hdr</p>
+<p>draft table zpo_hdr_d</p>
+<p>lock master total etag LastChangedAt</p>
+<p>authorization master ( instance )</p>
+<p>etag master LocalLastChangedAt</p>
+<p>{</p>
+<p>create;</p>
+<p>update ( features : instance );</p>
+<p>delete ( features : instance );</p>
+<p>field ( numbering : managed, readonly ) PoUuid;</p>
+<p>field ( readonly ) PoId, Status, TotalAmount,</p>
+<p>CreatedBy, CreatedAt, LastChangedBy,</p>
+<p>LastChangedAt, LocalLastChangedAt;</p>
+<p>field ( mandatory ) Supplier, OrderDate, CurrencyCode;</p>
+<p>association _Item { create ( features : instance ); with draft; }</p>
+<p>action ( features : instance ) submit result [1] $self;</p>
+<p>action ( features : instance ) approve result [1] $self;</p>
+<p>action ( features : instance ) reject result [1] $self;</p>
+<p>determination setInitialValues on modify { create; }</p>
+<p>determination setPoId on save { create; }</p>
+<p>validation validateSupplier on save { create; field Supplier; }</p>
+<p>validation validateItems on save { create; update; }</p>
+<p>draft action Edit;</p>
+<p>draft action Activate optimized;</p>
+<p>draft action Discard;</p>
+<p>draft action Resume;</p>
+<p>draft determine action Prepare {</p>
+<p>validation validateSupplier;</p>
+<p>validation validateItems;</p>
+<p>}</p>
+<p>mapping for zpo_hdr corresponding {</p>
+<p>PoUuid = po_uuid;</p>
+<p>PoId = po_id;</p>
+<p>Supplier = supplier;</p>
+<p>Description = description;</p>
+<p>OrderDate = order_date;</p>
+<p>CurrencyCode = currency_code;</p>
+<p>TotalAmount = total_amount;</p>
+<p>Status = status;</p>
+<p>CreatedBy = created_by;</p>
+<p>CreatedAt = created_at;</p>
+<p>LastChangedBy = last_changed_by;</p>
+<p>LastChangedAt = last_changed_at;</p>
+<p>LocalLastChangedAt = local_last_changed_at;</p>
+<p>}</p>
+<p>}</p>
+<p>define behavior for ZI_PO_ITEM alias Item</p>
+<p>persistent table zpo_item</p>
+<p>draft table zpo_item_d</p>
+<p>lock dependent by _PurchaseOrder</p>
+<p>authorization dependent by _PurchaseOrder</p>
+<p>etag dependent by _PurchaseOrder</p>
+<p>{</p>
+<p>update;</p>
+<p>delete;</p>
+<p>field ( numbering : managed, readonly ) ItemUuid;</p>
+<p>field ( readonly ) PoUuid, CurrencyCode;</p>
+<p>field ( mandatory ) ItemNo, MaterialText, Quantity, NetPrice;</p>
+<p>association _PurchaseOrder { with draft; }</p>
+<p>determination calculateTotal on modify {</p>
+<p>create; field Quantity, NetPrice;</p>
+<p>}</p>
+<p>mapping for zpo_item corresponding {</p>
+<p>ItemUuid = item_uuid;</p>
+<p>PoUuid = po_uuid;</p>
+<p>ItemNo = item_no;</p>
+<p>MaterialText = material_text;</p>
+<p>Quantity = quantity;</p>
+<p>CurrencyCode = currency_code;</p>
+<p>NetPrice = net_price;</p>
+<p>}</p>
+<p>}</p>
+<h2 id="behavior-implementation-zbp_i_po_hdr-local-types">6.5 Behavior Implementation – ZBP_I_PO_HDR (Local Types)</h2>
+<p>In ADT, use the Local Types tab of ZBP_I_PO_HDR. The handler methods below implement instance features, authorization, actions, determinations, and validations.</p>
+<p>CLASS lhc_purchaseorder DEFINITION</p>
+<p>INHERITING FROM cl_abap_behavior_handler.</p>
+<p>PRIVATE SECTION.</p>
+<p>METHODS get_instance_features FOR INSTANCE FEATURES</p>
+<p>IMPORTING keys REQUEST requested_features</p>
+<p>FOR purchaseorder RESULT result.</p>
+<p>METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION</p>
+<p>IMPORTING keys REQUEST requested_authorizations</p>
+<p>FOR purchaseorder RESULT result.</p>
+<p>METHODS submit FOR MODIFY</p>
+<p>IMPORTING keys FOR ACTION purchaseorder~submit RESULT result.</p>
+<p>METHODS approve FOR MODIFY</p>
+<p>IMPORTING keys FOR ACTION purchaseorder~approve RESULT result.</p>
+<p>METHODS reject FOR MODIFY</p>
+<p>IMPORTING keys FOR ACTION purchaseorder~reject RESULT result.</p>
+<p>METHODS setinitialvalues FOR DETERMINE ON MODIFY</p>
+<p>IMPORTING keys FOR purchaseorder~setinitialvalues.</p>
+<p>METHODS setpoid FOR DETERMINE ON SAVE</p>
+<p>IMPORTING keys FOR purchaseorder~setpoid.</p>
+<p>METHODS validatesupplier FOR VALIDATE ON SAVE</p>
+<p>IMPORTING keys FOR purchaseorder~validatesupplier.</p>
+<p>METHODS validateitems FOR VALIDATE ON SAVE</p>
+<p>IMPORTING keys FOR purchaseorder~validateitems.</p>
+<p>ENDCLASS.</p>
+<p>CLASS lhc_purchaseorder IMPLEMENTATION.</p>
+<p>METHOD get_instance_features.</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder FIELDS ( status )</p>
+<p>WITH CORRESPONDING #( keys )</p>
+<p>RESULT DATA(pos).</p>
+<p>result = VALUE #(</p>
+<p>FOR po IN pos</p>
+<p>( %tky = po-%tky</p>
+<p>%features-%update = COND #(</p>
+<p>WHEN po-status = 'N'</p>
+<p>THEN if_abap_behv=&gt;fc-o-enabled</p>
+<p>ELSE if_abap_behv=&gt;fc-o-disabled )</p>
+<p>%features-%delete = COND #(</p>
+<p>WHEN po-status = 'N'</p>
+<p>THEN if_abap_behv=&gt;fc-o-enabled</p>
+<p>ELSE if_abap_behv=&gt;fc-o-disabled )</p>
+<p>%assoc-_item = COND #(</p>
+<p>WHEN po-status = 'N'</p>
+<p>THEN if_abap_behv=&gt;fc-o-enabled</p>
+<p>ELSE if_abap_behv=&gt;fc-o-disabled )</p>
+<p>%action-submit = COND #(</p>
+<p>WHEN po-status = 'N'</p>
+<p>THEN if_abap_behv=&gt;fc-o-enabled</p>
+<p>ELSE if_abap_behv=&gt;fc-o-disabled )</p>
+<p>%action-approve = COND #(</p>
+<p>WHEN po-status = 'S'</p>
+<p>THEN if_abap_behv=&gt;fc-o-enabled</p>
+<p>ELSE if_abap_behv=&gt;fc-o-disabled )</p>
+<p>%action-reject = COND #(</p>
+<p>WHEN po-status = 'S'</p>
+<p>THEN if_abap_behv=&gt;fc-o-enabled</p>
+<p>ELSE if_abap_behv=&gt;fc-o-disabled ) ) ).</p>
+<p>ENDMETHOD.</p>
+<p>METHOD get_instance_authorizations.</p>
+<p>" Creator cannot approve or reject own PO.</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder FIELDS ( createdby )</p>
+<p>WITH CORRESPONDING #( keys )</p>
+<p>RESULT DATA(pos).</p>
+<p>DATA(user) = cl_abap_context_info=&gt;get_user_technical_name( ).</p>
+<p>result = VALUE #(</p>
+<p>FOR po IN pos</p>
+<p>( %tky = po-%tky</p>
+<p>%action-approve = COND #(</p>
+<p>WHEN po-createdby = user</p>
+<p>THEN if_abap_behv=&gt;auth-unauthorized</p>
+<p>ELSE if_abap_behv=&gt;auth-allowed )</p>
+<p>%action-reject = COND #(</p>
+<p>WHEN po-createdby = user</p>
+<p>THEN if_abap_behv=&gt;auth-unauthorized</p>
+<p>ELSE if_abap_behv=&gt;auth-allowed ) ) ).</p>
+<p>ENDMETHOD.</p>
+<p>METHOD submit.</p>
+<p>MODIFY ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder UPDATE FIELDS ( status )</p>
+<p>WITH VALUE #(</p>
+<p>FOR key IN keys</p>
+<p>( %tky = key-%tky status = 'S' ) ).</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder ALL FIELDS</p>
+<p>WITH CORRESPONDING #( keys )</p>
+<p>RESULT DATA(pos).</p>
+<p>result = VALUE #(</p>
+<p>FOR po IN pos</p>
+<p>( %tky = po-%tky %param = po ) ).</p>
+<p>ENDMETHOD.</p>
+<p>METHOD approve.</p>
+<p>MODIFY ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder UPDATE FIELDS ( status )</p>
+<p>WITH VALUE #(</p>
+<p>FOR key IN keys</p>
+<p>( %tky = key-%tky status = 'A' ) ).</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder ALL FIELDS</p>
+<p>WITH CORRESPONDING #( keys )</p>
+<p>RESULT DATA(pos).</p>
+<p>result = VALUE #(</p>
+<p>FOR po IN pos</p>
+<p>( %tky = po-%tky %param = po ) ).</p>
+<p>ENDMETHOD.</p>
+<p>METHOD reject.</p>
+<p>MODIFY ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder UPDATE FIELDS ( status )</p>
+<p>WITH VALUE #(</p>
+<p>FOR key IN keys</p>
+<p>( %tky = key-%tky status = 'R' ) ).</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder ALL FIELDS</p>
+<p>WITH CORRESPONDING #( keys )</p>
+<p>RESULT DATA(pos).</p>
+<p>result = VALUE #(</p>
+<p>FOR po IN pos</p>
+<p>( %tky = po-%tky %param = po ) ).</p>
+<p>ENDMETHOD.</p>
+<p>METHOD setinitialvalues.</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder FIELDS ( status )</p>
+<p>WITH CORRESPONDING #( keys )</p>
+<p>RESULT DATA(pos).</p>
+<p>DELETE pos WHERE status IS NOT INITIAL.</p>
+<p>CHECK pos IS NOT INITIAL.</p>
+<p>MODIFY ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder</p>
+<p>UPDATE FIELDS ( status orderdate currencycode )</p>
+<p>WITH VALUE #(</p>
+<p>FOR po IN pos</p>
+<p>( %tky = po-%tky</p>
+<p>status = 'N'</p>
+<p>orderdate = cl_abap_context_info=&gt;get_system_date( )</p>
+<p>currencycode = 'INR' ) ).</p>
+<p>ENDMETHOD.</p>
+<p>METHOD setpoid.</p>
+<p>" Demo numbering only. Use a number range in production.</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder FIELDS ( poid )</p>
+<p>WITH CORRESPONDING #( keys )</p>
+<p>RESULT DATA(pos).</p>
+<p>DELETE pos WHERE poid IS NOT INITIAL.</p>
+<p>CHECK pos IS NOT INITIAL.</p>
+<p>SELECT MAX( po_id ) FROM zpo_hdr INTO @DATA(max_id).</p>
+<p>LOOP AT pos INTO DATA(po).</p>
+<p>max_id = max_id + 1.</p>
+<p>MODIFY ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder UPDATE FIELDS ( poid )</p>
+<p>WITH VALUE #( ( %tky = po-%tky poid = max_id ) ).</p>
+<p>ENDLOOP.</p>
+<p>ENDMETHOD.</p>
+<p>METHOD validatesupplier.</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder FIELDS ( supplier )</p>
+<p>WITH CORRESPONDING #( keys )</p>
+<p>RESULT DATA(pos).</p>
+<p>SELECT supplier_id FROM zpo_supplier INTO TABLE @DATA(valid).</p>
+<p>LOOP AT pos INTO DATA(po).</p>
+<p>APPEND VALUE #(</p>
+<p>%tky = po-%tky</p>
+<p>%state_area = 'VALIDATE_SUPPLIER' )</p>
+<p>TO reported-purchaseorder.</p>
+<p>IF po-supplier IS INITIAL OR</p>
+<p>NOT line_exists( valid[ supplier_id = po-supplier ] ).</p>
+<p>APPEND VALUE #( %tky = po-%tky )</p>
+<p>TO failed-purchaseorder.</p>
+<p>APPEND VALUE #(</p>
+<p>%tky = po-%tky</p>
+<p>%state_area = 'VALIDATE_SUPPLIER'</p>
+<p>%element-supplier = if_abap_behv=&gt;mk-on</p>
+<p>%msg = new_message_with_text(</p>
+<p>severity = if_abap_behv_message=&gt;severity-error</p>
+<p>text = 'Please enter a valid supplier' ) )</p>
+<p>TO reported-purchaseorder.</p>
+<p>ENDIF.</p>
+<p>ENDLOOP.</p>
+<p>ENDMETHOD.</p>
+<p>METHOD validateitems.</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder BY \_item FIELDS ( itemuuid )</p>
+<p>WITH CORRESPONDING #( keys )</p>
+<p>RESULT DATA(items) LINK DATA(links).</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder FIELDS ( poid )</p>
+<p>WITH CORRESPONDING #( keys )</p>
+<p>RESULT DATA(pos).</p>
+<p>LOOP AT pos INTO DATA(po).</p>
+<p>APPEND VALUE #(</p>
+<p>%tky = po-%tky</p>
+<p>%state_area = 'VALIDATE_ITEMS' )</p>
+<p>TO reported-purchaseorder.</p>
+<p>IF NOT line_exists( links[ source-%tky = po-%tky ] ).</p>
+<p>APPEND VALUE #( %tky = po-%tky )</p>
+<p>TO failed-purchaseorder.</p>
+<p>APPEND VALUE #(</p>
+<p>%tky = po-%tky</p>
+<p>%state_area = 'VALIDATE_ITEMS'</p>
+<p>%msg = new_message_with_text(</p>
+<p>severity = if_abap_behv_message=&gt;severity-error</p>
+<p>text = 'Add at least one item' ) )</p>
+<p>TO reported-purchaseorder.</p>
+<p>ENDIF.</p>
+<p>ENDLOOP.</p>
+<p>ENDMETHOD.</p>
+<p>ENDCLASS.</p>
+<p>CLASS lhc_item DEFINITION</p>
+<p>INHERITING FROM cl_abap_behavior_handler.</p>
+<p>PRIVATE SECTION.</p>
+<p>METHODS calculatetotal FOR DETERMINE ON MODIFY</p>
+<p>IMPORTING keys FOR item~calculatetotal.</p>
+<p>ENDCLASS.</p>
+<p>CLASS lhc_item IMPLEMENTATION.</p>
+<p>METHOD calculatetotal.</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY item BY \_purchaseorder FIELDS ( currencycode )</p>
+<p>WITH CORRESPONDING #( keys )</p>
+<p>RESULT DATA(pos).</p>
+<p>LOOP AT pos INTO DATA(po).</p>
+<p>READ ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder BY \_item FIELDS ( quantity netprice )</p>
+<p>WITH VALUE #( ( %tky = po-%tky ) )</p>
+<p>RESULT DATA(items).</p>
+<p>DATA total TYPE p LENGTH 8 DECIMALS 2.</p>
+<p>CLEAR total.</p>
+<p>LOOP AT items INTO DATA(item).</p>
+<p>total = total + item-quantity * item-netprice.</p>
+<p>ENDLOOP.</p>
+<p>MODIFY ENTITIES OF zi_po_hdr IN LOCAL MODE</p>
+<p>ENTITY purchaseorder UPDATE FIELDS ( totalamount )</p>
+<p>WITH VALUE #(</p>
+<p>( %tky = po-%tky totalamount = total ) )</p>
+<p>ENTITY item UPDATE FIELDS ( currencycode )</p>
+<p>WITH VALUE #(</p>
+<p>FOR i IN items</p>
+<p>( %tky = i-%tky currencycode = po-currencycode ) ).</p>
+<p>ENDLOOP.</p>
+<p>ENDMETHOD.</p>
+<p>ENDCLASS.</p>
+<p>Implementation note: the code above follows the supplied guide's handler design. Check generated method signatures and field aliases in your ADT release, because ADT-generated local handler declarations must match the active behavior definition exactly.</p>
+<h2 id="projection-view-zc_po_hdr">6.6 Projection View – ZC_PO_HDR</h2>
+<p>@AccessControl.authorizationCheck: #NOT_REQUIRED</p>
+<p>@EndUserText.label: 'Purchase Order (Projection)'</p>
+<p>@Metadata.allowExtensions: true</p>
+<p>@Search.searchable: true</p>
+<p>define root view entity ZC_PO_HDR</p>
+<p>provider contract transactional_query</p>
+<p>as projection on ZI_PO_HDR</p>
+<p>{</p>
+<p>key PoUuid,</p>
+<p>PoId,</p>
+<p>@Search.defaultSearchElement: true</p>
+<p>Supplier,</p>
+<p>SupplierName,</p>
+<p>@Search.defaultSearchElement: true</p>
+<p>Description,</p>
+<p>OrderDate,</p>
+<p>CurrencyCode,</p>
+<p>TotalAmount,</p>
+<p>Status,</p>
+<p>StatusText,</p>
+<p>StatusCriticality,</p>
+<p>CreatedBy,</p>
+<p>CreatedAt,</p>
+<p>LastChangedBy,</p>
+<p>LastChangedAt,</p>
+<p>LocalLastChangedAt,</p>
+<p>_Item : redirected to composition child ZC_PO_ITEM,</p>
+<p>_Supplier</p>
+<p>}</p>
+<h2 id="projection-view-zc_po_item">6.7 Projection View – ZC_PO_ITEM</h2>
+<p>@AccessControl.authorizationCheck: #NOT_REQUIRED</p>
+<p>@EndUserText.label: 'PO Item (Projection)'</p>
+<p>@Metadata.allowExtensions: true</p>
+<p>define view entity ZC_PO_ITEM</p>
+<p>as projection on ZI_PO_ITEM</p>
+<p>{</p>
+<p>key ItemUuid,</p>
+<p>PoUuid,</p>
+<p>ItemNo,</p>
+<p>MaterialText,</p>
+<p>Quantity,</p>
+<p>CurrencyCode,</p>
+<p>NetPrice,</p>
+<p>_PurchaseOrder : redirected to parent ZC_PO_HDR</p>
+<p>}</p>
+<h2 id="projection-behavior-definition">6.8 Projection Behavior Definition</h2>
+<p>projection;</p>
+<p>strict ( 2 );</p>
+<p>use draft;</p>
+<p>define behavior for ZC_PO_HDR alias PurchaseOrder</p>
+<p>{</p>
+<p>use create;</p>
+<p>use update;</p>
+<p>use delete;</p>
+<p>use action submit;</p>
+<p>use action approve;</p>
+<p>use action reject;</p>
+<p>use action Edit;</p>
+<p>use action Activate;</p>
+<p>use action Discard;</p>
+<p>use action Resume;</p>
+<p>use action Prepare;</p>
+<p>use association _Item { create; with draft; }</p>
+<p>}</p>
+<p>define behavior for ZC_PO_ITEM alias Item</p>
+<p>{</p>
+<p>use update;</p>
+<p>use delete;</p>
+<p>use association _PurchaseOrder { with draft; }</p>
+<p>}</p>
+<h2 id="metadata-extension-zc_po_hdr">6.9 Metadata Extension – ZC_PO_HDR</h2>
+<p>@Metadata.layer: #CORE</p>
+<p>@UI.headerInfo: {</p>
+<p>typeName: 'Purchase Order',</p>
+<p>typeNamePlural: 'Purchase Orders',</p>
+<p>title: { type: #STANDARD, value: 'PoId' },</p>
+<p>description: { type: #STANDARD, value: 'Description' }</p>
+<p>}</p>
+<p>annotate view ZC_PO_HDR with</p>
+<p>{</p>
+<p>@UI.facet: [</p>
+<p>{ id: 'General', purpose: #STANDARD,</p>
+<p>type: #IDENTIFICATION_REFERENCE,</p>
+<p>label: 'General Information', position: 10 },</p>
+<p>{ id: 'Items', purpose: #STANDARD,</p>
+<p>type: #LINEITEM_REFERENCE,</p>
+<p>label: 'Items', position: 20, targetElement: '_Item' }</p>
+<p>]</p>
+<p>@UI.hidden: true</p>
+<p>PoUuid;</p>
+<p>@UI: {</p>
+<p>lineItem: [</p>
+<p>{ position: 10, importance: #HIGH },</p>
+<p>{ type: #FOR_ACTION, dataAction: 'approve', label: 'Approve' },</p>
+<p>{ type: #FOR_ACTION, dataAction: 'reject', label: 'Reject' }</p>
+<p>],</p>
+<p>identification: [</p>
+<p>{ position: 10 },</p>
+<p>{ type: #FOR_ACTION, dataAction: 'submit',</p>
+<p>label: 'Submit for Approval', position: 1 },</p>
+<p>{ type: #FOR_ACTION, dataAction: 'approve',</p>
+<p>label: 'Approve', position: 2 },</p>
+<p>{ type: #FOR_ACTION, dataAction: 'reject',</p>
+<p>label: 'Reject', position: 3 }</p>
+<p>]</p>
+<p>}</p>
+<p>PoId;</p>
+<p>@UI: {</p>
+<p>lineItem: [ { position: 20, importance: #HIGH } ],</p>
+<p>identification: [ { position: 20 } ],</p>
+<p>selectionField: [ { position: 10 } ]</p>
+<p>}</p>
+<p>@Consumption.valueHelpDefinition: [</p>
+<p>{ entity: { name: 'ZI_PO_SUPPLIER_VH', element: 'SupplierId' } }</p>
+<p>]</p>
+<p>@ObjectModel.text.element: [ 'SupplierName' ]</p>
+<p>Supplier;</p>
+<p>@UI.hidden: true</p>
+<p>SupplierName;</p>
+<p>@UI: {</p>
+<p>lineItem: [ { position: 30 } ],</p>
+<p>identification: [ { position: 30 } ]</p>
+<p>}</p>
+<p>Description;</p>
+<p>@UI: {</p>
+<p>lineItem: [ { position: 40 } ],</p>
+<p>identification: [ { position: 40 } ],</p>
+<p>selectionField: [ { position: 20 } ]</p>
+<p>}</p>
+<p>OrderDate;</p>
+<p>@UI: {</p>
+<p>lineItem: [ { position: 50 } ],</p>
+<p>identification: [ { position: 50 } ]</p>
+<p>}</p>
+<p>CurrencyCode;</p>
+<p>@UI: {</p>
+<p>lineItem: [ { position: 60, importance: #HIGH } ],</p>
+<p>identification: [ { position: 60 } ]</p>
+<p>}</p>
+<p>TotalAmount;</p>
+<p>@UI.hidden: true</p>
+<p>Status;</p>
+<p>@UI: {</p>
+<p>lineItem: [</p>
+<p>{ position: 70, importance: #HIGH,</p>
+<p>criticality: 'StatusCriticality' }</p>
+<p>],</p>
+<p>identification: [</p>
+<p>{ position: 70, criticality: 'StatusCriticality' }</p>
+<p>],</p>
+<p>selectionField: [ { position: 30 } ]</p>
+<p>}</p>
+<p>StatusText;</p>
+<p>@UI.hidden: true</p>
+<p>StatusCriticality;</p>
+<p>}</p>
+<h2 id="metadata-extension-zc_po_item">6.10 Metadata Extension – ZC_PO_ITEM</h2>
+<p>@Metadata.layer: #CORE</p>
+<p>@UI.headerInfo: {</p>
+<p>typeName: 'Item',</p>
+<p>typeNamePlural: 'Items',</p>
+<p>title: { type: #STANDARD, value: 'MaterialText' }</p>
+<p>}</p>
+<p>annotate view ZC_PO_ITEM with</p>
+<p>{</p>
+<p>@UI.facet: [</p>
+<p>{ id: 'ItemData', purpose: #STANDARD,</p>
+<p>type: #IDENTIFICATION_REFERENCE,</p>
+<p>label: 'Item', position: 10 }</p>
+<p>]</p>
+<p>@UI.hidden: true</p>
+<p>ItemUuid;</p>
+<p>@UI.hidden: true</p>
+<p>PoUuid;</p>
+<p>@UI: {</p>
+<p>lineItem: [ { position: 10, importance: #HIGH } ],</p>
+<p>identification: [ { position: 10 } ]</p>
+<p>}</p>
+<p>ItemNo;</p>
+<p>@UI: {</p>
+<p>lineItem: [ { position: 20, importance: #HIGH } ],</p>
+<p>identification: [ { position: 20 } ]</p>
+<p>}</p>
+<p>MaterialText;</p>
+<p>@UI: {</p>
+<p>lineItem: [ { position: 30 } ],</p>
+<p>identification: [ { position: 30 } ]</p>
+<p>}</p>
+<p>Quantity;</p>
+<p>@UI: {</p>
+<p>lineItem: [ { position: 40 } ],</p>
+<p>identification: [ { position: 40 } ]</p>
+<p>}</p>
+<p>NetPrice;</p>
+<p>@UI.hidden: true</p>
+<p>CurrencyCode;</p>
+<p>}</p>
+<h2 id="service-definition-zui_po_o4">6.11 Service Definition – ZUI_PO_O4</h2>
+<p>@EndUserText.label: 'PO Approval Service'</p>
+<p>define service ZUI_PO_O4 {</p>
+<p>expose ZC_PO_HDR as PurchaseOrder;</p>
+<p>expose ZC_PO_ITEM as PurchaseOrderItem;</p>
+<p>expose ZI_PO_SUPPLIER_VH as Supplier;</p>
+<p>}</p>
+<h2 id="service-binding-zui_po_o4_v4">6.12 Service Binding – ZUI_PO_O4_V4</h2>
+<p>Create a Service Binding from ZUI_PO_O4. Set Binding Type to OData V4 – UI. Activate the binding, select Publish, then select the PurchaseOrder entity and choose Preview. The supplied screenshot shows the service binding as Published and the PurchaseOrder, PurchaseOrderItem, and Supplier entity sets.</p>
+<h1 id="business-workflow">7. Business Workflow</h1>
+<h2 id="end-to-end-process">7.1 End-to-End Process</h2>
+<ol type="1">
+<li><p>Buyer opens the Fiori Elements Purchase Orders application.</p></li>
+<li><p>Buyer selects Create and enters supplier, description, order date, and currency (defaulted to INR by the initialization determination).</p></li>
+<li><p>Buyer creates one or more line items with item number, material description, quantity, and net price.</p></li>
+<li><p>The item determination calculates the header total as the sum of quantity multiplied by net price.</p></li>
+<li><p>Buyer saves the document. Supplier and item validations run; the PO number is assigned and the new PO is saved with status N (New).</p></li>
+<li><p>Buyer selects Submit for Approval. The status changes to S (Submitted), and editing/deletion/item creation are disabled.</p></li>
+<li><p>A different user selects Approve or Reject. Status changes to A (Approved) or R (Rejected).</p></li>
+<li><p>The List Report displays the status text and criticality colour.</p></li>
+</ol>
+<h2 id="status-lifecycle">7.2 Status Lifecycle</h2>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Status code</strong></th>
+<th><strong>Displayed text</strong></th>
+<th><strong>Meaning</strong></th>
+<th><strong>Expected available action</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>N</td>
+<td>New</td>
+<td>Newly created PO</td>
+<td>Edit, delete, add item, submit</td>
+</tr>
+<tr class="even">
+<td>S</td>
+<td>Submitted</td>
+<td>Waiting for approval</td>
+<td>Approve or reject; editing blocked</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>Approved</td>
+<td>Approved by another user</td>
+<td>No further edit/approval action in this sample</td>
+</tr>
+<tr class="even">
+<td>R</td>
+<td>Rejected</td>
+<td>Rejected by approver</td>
+<td>No further edit/approval action in this sample</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="business-rule-summary">7.3 Business Rule Summary</h2>
+<ul>
+<li><p>Supplier is mandatory and must match a record in ZPO_SUPPLIER.</p></li>
+<li><p>At least one item is required before the PO can be saved/activated.</p></li>
+<li><p>Only a New PO can be edited, deleted, or submitted.</p></li>
+<li><p>Only a Submitted PO can be approved or rejected.</p></li>
+<li><p>The creator is not authorized to approve or reject their own PO.</p></li>
+<li><p>The PO currency is initialized to INR in the sample implementation.</p></li>
+</ul>
+<h1 id="service-publishing-and-fiori-elements-ui">8. Service Publishing and Fiori Elements UI</h1>
+<ol start="9" type="1">
+<li><p>Activate the service definition ZUI_PO_O4.</p></li>
+<li><p>Create service binding ZUI_PO_O4_V4 with binding type OData V4 – UI.</p></li>
+<li><p>Activate the service binding.</p></li>
+<li><p>Choose Publish and confirm the service version is published.</p></li>
+<li><p>Select the PurchaseOrder entity set and choose Preview.</p></li>
+<li><p>In the List Report, choose Go to retrieve records or Create to start a new purchase order.</p></li>
+</ol>
+<p>The generated Fiori Elements application contains a List Report for searching/filtering purchase orders and an Object Page for header details and the associated items. UI annotations define the columns, facets, action buttons, selection fields, value help, and status criticality.</p>
+<h1 id="project-output-and-screenshots">9. Project Output and Screenshots</h1>
+<p>The following screenshots were supplied as evidence of the implemented application.</p>
+<p><img src="p2p/image1.jpg" loading="lazy" decoding="async" /></p>
+<p><em>Figure 1. ADT service binding ZUI_PO_O4_V4 – OData V4 UI binding shown as Published; PurchaseOrder, PurchaseOrderItem and Supplier entities are exposed.</em></p>
+<p><img src="p2p/image2.jpg" loading="lazy" decoding="async" /></p>
+<p><em>Figure 2. Fiori Elements List Report initial state before records are retrieved – Purchase Orders page with search, filters and Create action.</em></p>
+<p><img src="p2p/image3.jpg" loading="lazy" decoding="async" /></p>
+<p><em>Figure 3. Fiori Elements List Report showing 7 purchase orders with supplier IDs, descriptions, order dates, INR totals and Approved/Rejected statuses.</em></p>
+<h2 id="observed-output-data">9.1 Observed Output Data</h2>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+<col />
+<col />
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>PO ID</strong></th>
+<th><strong>Supplier ID</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Order date</strong></th>
+<th><strong>Total amount (INR)</strong></th>
+<th><strong>Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>0000100002</td>
+<td>laptops</td>
+<td>Oct 12, 2026</td>
+<td>465,000.00</td>
+<td>Approved</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0000100003</td>
+<td>Control panels Q4</td>
+<td>Oct 12, 2026</td>
+<td>2,657,400.00</td>
+<td>Rejected</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>0000100004</td>
+<td>shipping boxes</td>
+<td>Oct 13, 2026</td>
+<td>50,000.00</td>
+<td>Approved</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>0000100001</td>
+<td>steel sheet batch 2</td>
+<td>Oct 13, 2026</td>
+<td>210,000.00</td>
+<td>Approved</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>0000100001</td>
+<td>RAP Testing Purchase Order</td>
+<td>Oct 13, 2026</td>
+<td>2,500,000.00</td>
+<td>Approved</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>0000100001</td>
+<td>(description not displayed)</td>
+<td>Oct 13, 2026</td>
+<td>87,500.00</td>
+<td>Approved</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>0000100003</td>
+<td>control panel q4</td>
+<td>Oct 13, 2026</td>
+<td>2,625,000.00</td>
+<td>Approved</td>
+</tr>
+</tbody>
+</table></div>
+<p>The List Report screenshot displays seven records. The amounts and statuses above are transcribed from the screenshot; they are presented as observed output rather than as independently recalculated values.</p>
+<h1 id="testing-and-validation">10. Testing and Validation</h1>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Test case</strong></th>
+<th><strong>Steps / input</strong></th>
+<th><strong>Expected result</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Successful creation</td>
+<td>Choose a valid supplier; enter description and one valid item; save</td>
+<td>PO saved with number, date, INR currency and New status</td>
+</tr>
+<tr class="even">
+<td>Supplier value help</td>
+<td>Open Supplier value help</td>
+<td>Sample suppliers are selectable</td>
+</tr>
+<tr class="odd">
+<td>Invalid supplier</td>
+<td>Attempt save with supplier missing or not in supplier master</td>
+<td>Validation error: Please enter a valid supplier</td>
+</tr>
+<tr class="even">
+<td>No item</td>
+<td>Attempt save without creating an item</td>
+<td>Validation error: Add at least one item</td>
+</tr>
+<tr class="odd">
+<td>Total calculation</td>
+<td>Enter quantity and net price on an item</td>
+<td>Header total reflects quantity × net price</td>
+</tr>
+<tr class="even">
+<td>Submit</td>
+<td>Submit a New PO</td>
+<td>Status becomes Submitted; edit/delete/item creation disabled</td>
+</tr>
+<tr class="odd">
+<td>Approve</td>
+<td>A different user approves a Submitted PO</td>
+<td>Status becomes Approved</td>
+</tr>
+<tr class="even">
+<td>Reject</td>
+<td>A different user rejects a Submitted PO</td>
+<td>Status becomes Rejected</td>
+</tr>
+<tr class="odd">
+<td>Segregation of duties</td>
+<td>Creator attempts to approve/reject own PO</td>
+<td>Authorization denies the action</td>
+</tr>
+<tr class="even">
+<td>Draft resume</td>
+<td>Start a draft, leave the app, reopen it</td>
+<td>Draft can be resumed</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="error-handling-common-issues">10.1 Error Handling / Common Issues</h2>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Symptom</strong></th>
+<th><strong>Suggested check / fix</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Draft table not found</td>
+<td>Use ADT quick fix Ctrl+1 on the draft table reference to generate it; activate the generated draft table.</td>
+</tr>
+<tr class="even">
+<td>Mapping error</td>
+<td>Check the CDS alias-to-database-field mapping names and spelling.</td>
+</tr>
+<tr class="odd">
+<td>Action buttons missing</td>
+<td>Check action declaration in interface BDEF, use action in projection BDEF, and exact action name in UI annotation.</td>
+</tr>
+<tr class="even">
+<td>Total remains zero</td>
+<td>Check item determination activation and ensure Quantity and NetPrice are entered.</td>
+</tr>
+<tr class="odd">
+<td>Item currency empty</td>
+<td>Confirm header currency is initialized; sample logic defaults it to INR.</td>
+</tr>
+<tr class="even">
+<td>Preview shows no rows</td>
+<td>Choose Go, check whether data exists, and verify the service binding is published.</td>
+</tr>
+</tbody>
+</table></div>
+<h1 id="known-limitations-and-improvements">11. Known Limitations and Improvements</h1>
+<p>The supplied build guide identifies several points that should be addressed before treating the sample as production-ready:</p>
+<ul>
+<li><p>Deleting an item does not retrigger the current on-modify total determination. A production solution should recalculate the total in an on-save header determination or another delete-aware mechanism.</p></li>
+<li><p>The sample PO numbering uses SELECT MAX( po_id ) + 1. This is suitable only as demonstration logic and is not safe for concurrent productive use. Replace it with a number range object/runtime.</p></li>
+<li><p>The sample authorization is based on creator-versus-current-user comparison. A productive application should use appropriate roles/authorization design and test with separate users.</p></li>
+<li><p>The sample has no rejection reason. Add an action parameter/abstract entity to capture a reason.</p></li>
+<li><p>Add ABAP Unit or EML-based tests for validations, actions, and total calculation.</p></li>
+<li><p>Add role-based approval limits, such as requiring a senior approver for high-value POs.</p></li>
+<li><p>Add analytical CDS views and charts for PO value by supplier/month.</p></li>
+<li><p>Add side effects so the UI refreshes the header total immediately when item data changes.</p></li>
+<li><p>Consider a Web API binding or RAP business event for integration after approval.</p></li>
+</ul>
+<h1 id="conclusion">12. Conclusion</h1>
+<p>The P2P Purchase Order Approval App demonstrates an end-to-end SAP RAP implementation. It combines relational data modelling, CDS view entities, managed behavior with draft, determinations, validations, actions, feature control, authorization, projection views, metadata extensions, OData V4 service exposure, and a generated Fiori Elements interface.</p>
+<p>The supplied screenshots confirm that the service binding was published and that the Fiori Elements List Report displayed seven purchase-order records with totals and approval statuses. The project provides a practical foundation for further improvements such as robust number ranges, rejection reasons, automated tests, and role-based approval policies.</p>
+<h1 id="appendix-a-object-inventory">Appendix A – Object Inventory</h1>
+<div class="tw"><table>
+<colgroup>
+<col />
+<col />
+<col />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Object type</strong></th>
+<th><strong>Object name</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Package</td>
+<td>ZP2P_PO_APPROVAL</td>
+<td>Project package shown in ADT screenshot</td>
+</tr>
+<tr class="even">
+<td>Database table</td>
+<td>ZPO_HDR</td>
+<td>PO header persistence</td>
+</tr>
+<tr class="odd">
+<td>Database table</td>
+<td>ZPO_ITEM</td>
+<td>PO item persistence</td>
+</tr>
+<tr class="even">
+<td>Database table</td>
+<td>ZPO_SUPPLIER</td>
+<td>Supplier master data</td>
+</tr>
+<tr class="odd">
+<td>Generated draft table</td>
+<td>ZPO_HDR_D</td>
+<td>Header draft persistence</td>
+</tr>
+<tr class="even">
+<td>Generated draft table</td>
+<td>ZPO_ITEM_D</td>
+<td>Item draft persistence</td>
+</tr>
+<tr class="odd">
+<td>ABAP class</td>
+<td>ZCL_PO_LOAD_DATA</td>
+<td>Loads sample suppliers</td>
+</tr>
+<tr class="even">
+<td>CDS view entity</td>
+<td>ZI_PO_SUPPLIER_VH</td>
+<td>Supplier value help</td>
+</tr>
+<tr class="odd">
+<td>CDS root view entity</td>
+<td>ZI_PO_HDR</td>
+<td>PO root interface view</td>
+</tr>
+<tr class="even">
+<td>CDS view entity</td>
+<td>ZI_PO_ITEM</td>
+<td>PO item interface view</td>
+</tr>
+<tr class="odd">
+<td>Behavior implementation</td>
+<td>ZBP_I_PO_HDR</td>
+<td>RAP handler implementation</td>
+</tr>
+<tr class="even">
+<td>Projection root view</td>
+<td>ZC_PO_HDR</td>
+<td>PO consumption view</td>
+</tr>
+<tr class="odd">
+<td>Projection view</td>
+<td>ZC_PO_ITEM</td>
+<td>Item consumption view</td>
+</tr>
+<tr class="even">
+<td>Metadata extension</td>
+<td>ZC_PO_HDR</td>
+<td>Header UI annotations</td>
+</tr>
+<tr class="odd">
+<td>Metadata extension</td>
+<td>ZC_PO_ITEM</td>
+<td>Item UI annotations</td>
+</tr>
+<tr class="even">
+<td>Service definition</td>
+<td>ZUI_PO_O4</td>
+<td>Exposes the consumption entities</td>
+</tr>
+<tr class="odd">
+<td>Service binding</td>
+<td>ZUI_PO_O4_V4</td>
+<td>OData V4 UI endpoint</td>
+</tr>
+</tbody>
+</table></div>
+<h1 id="appendix-b-interview-explanation-points">Appendix B – Interview Explanation Points</h1>
+<ul>
+<li><p>Why managed RAP? The framework provides standard transactional processing and reduces the amount of custom persistence code.</p></li>
+<li><p>What is draft handling? It allows users to save incomplete changes separately and continue later before activation.</p></li>
+<li><p>Determination vs validation: a determination derives or sets values; a validation checks whether data satisfies business rules.</p></li>
+<li><p>On modify vs on save: on-modify logic reacts during changes; on-save logic runs in the save sequence.</p></li>
+<li><p>What is a projection view? It defines the consumption-facing shape of a business object and can expose only the required elements.</p></li>
+<li><p>What is instance feature control? It dynamically enables/disables operations for a particular business-object instance.</p></li>
+<li><p>What is instance authorization? It determines whether the current user is authorized for an operation on a particular instance.</p></li>
+<li><p>Why OData V4? It exposes the RAP service for modern Fiori Elements consumption.</p></li>
+<li><p>What is segregation of duties? The same user who creates a purchase order must not approve or reject it in this sample workflow.</p></li>
+</ul>
+<h1 id="source-basis">Source Basis</h1>
+<p>Primary build reference: “P2P Purchase Order Approval App – SAP RAP Build Guide” (20 pages), supplied with this request. The report follows its object structure, code listings, activation sequence, workflow, test guidance, known limitations, and resume-strengthening recommendations. The three project screenshots supplied with this request are included in Section 9 as implementation evidence.</p>
+<p>Important: this report documents the supplied implementation. Before activation in a different SAP release or tenant, verify syntax and generated RAP signatures in ADT and adapt only where the target system requires it.</p>
+</main>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+document.getElementById("back").addEventListener("click",function(e){if(history.length>1){e.preventDefault();history.back()}});</script></body></html>
